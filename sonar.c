@@ -1,9 +1,8 @@
 #include "sonar.h"
+#include "servo.h"
 #include "sLCD.h"
 #define SONAR_TICKS_PER_CM 87u		 /*  Tick = 2/3us. 1cm ~ 54us.   1cm = 87 ticks */
 #define SONAR_TICKS_PER_MM 8.7f 	 /* TODO: Include temperature influence on speed of sound */
-																	 
-
 
 SonarWorkModes SonarMode = SINGLE; /** Default sonar work mode is SINGLE */
 SonarFSM SonarState = SONAR_IDLE;  /** Initialize sonar state to IDLE */
@@ -33,7 +32,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	/* Set TMP1 */
 	TPM1->SC |= TPM_SC_PS(0x5);													/* Set clock prescaler to divide by 32. 1 Tick = 2/3us */
 	TPM1->CNT = 0;																			/* Clear counter value */	
-	TPM1->MOD = (35000*3)/2;                                 /* Set max echo length to 35ms */
+	TPM1->MOD = (35000*3)/2;                            /* Set max echo length to 35ms */
 																											
 
 	/* Configure TMP1_CH0. Echo Measurement*/
@@ -76,6 +75,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	PIT->MCR = 0x00;
 }
 
+
 /********************************************//**
  *  Brief TPM1 interupt handler
  *  Check which channel triggered interupt
@@ -100,10 +100,9 @@ void TPM1_IRQHandler(void) {
 		} else  {	
 			  TPM1->SC |= TPM_SC_TOF_MASK;															   /* Clear TPM1 Overflow flag */
 				TPM1->SC &= ~TPM_SC_TOIE_MASK; 															 /* Disable TPM1 Overflow interupt */
-			  SonarState = SONAR_CAPTURE_END;															 /* Change sonar state to CAPTURE_END */
 				SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_MM);  /* Execute user results handler */
+				SonarState = SONAR_CAPTURE_END;															 /* Change sonar state to CAPTURE_END */
 				success++;
-				SonarState = SONAR_IDLE;																		 /* Change sonar state to IDLE */
 		}
 		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;										 /* clear TMP1_Ch0 flag */
 	} 
@@ -119,20 +118,40 @@ void TPM1_IRQHandler(void) {
 	}	
 }
 
-/********************************************//**
- *  Brief PIT IRQ
- ***********************************************/
-void PIT_IRQHandler(void){
-	//if (SonarMode == CONTINUOUS) {
-	if (SonarMode == CONTINUOUS && SonarState == SONAR_IDLE) {
+void SendTrigger(void){
 		SonarState = SONAR_TRIGGER_SENT;
 		TPM1->CONTROLS[1].CnSC |= TPM_CnSC_CHIE_MASK;								 /* Enable TMP1_Ch1 interupts */
 		TPM1->SC |= TPM_SC_TOF_MASK;															   /* Clear TPM1 Overflow flag */
 		TPM1->SC |= TPM_SC_TOIE_MASK; 											         /* Enable TPM1 Overflow interupt */
 		TPM1->CNT = 0; 																							 /* Reset counter */
 		FPTE->PSOR |= (1 << 21);																		 /* Toggle Trigger pin on */
-	}
+}
+
+/********************************************//**
+ *  Brief PIT IRQ
+ ***********************************************/
+void PIT_IRQHandler(void){
+	//if (SonarMode == CONTINUOUS) {
+	if (SonarMode == CONTINUOUS) {
+		switch(SonarState) {
+			case SONAR_IDLE:
+					 //Servo_step();
+					 SendTrigger();
+					 break;
+			case SONAR_CAPTURE_OVERFLOW: 
+					 SendTrigger();
+					 Servo_step();
+					 break;
+			case SONAR_CAPTURE_END:
+					 Servo_step();
+					 SendTrigger();
+					 break;
+			default:
+					 //Servo_step();
+					 break;
+		}
 	PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; 									 /* Clear Interupt Flag */
+	}
 }
 
 void SonarDistHandler(uint16_t distance){

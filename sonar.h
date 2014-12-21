@@ -41,7 +41,6 @@ extern SonarWorkModes SonarMode;
  *  Brief Initialize Sonar and required peripherials
  ***********************************************/
 void Sonar_init(SonarWorkModes InitialWorkMode);
-
 void SonarDistHandler(uint16_t distance); 
 
 #endif 
