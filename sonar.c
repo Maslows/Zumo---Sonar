@@ -58,14 +58,14 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	
 	/* Initialize PIT for continous work mode */
 	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;																	/* Enable PIT Clock Gating */
-	pit_interval = (SONAR_MEAS_INTERVAL_MS * 1.0E-3)/(1.0/24.0E6);    								/* calculate PIT Load Value */
+	pit_interval = (SONAR_MEAS_INTERVAL_MS * 1.0E-3)/(1.0/24.0E6);    /* calculate PIT Load Value */
 	PIT->CHANNEL[0].LDVAL = (uint32_t)pit_interval;										/* set PIT Load Value */
 	PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TIE_MASK;  										/* Enable interrupts in PIT module on channel 1 */
 	PIT->CHANNEL[0].TCTRL |= PIT_TCTRL_TEN_MASK;  										/* Enable Timer on given channel on channel 1 */
 	
 	/* Configure NVIC for PIT interupt */
-	NVIC_ClearPendingIRQ(PIT_IRQn);											/*  Clear NVIC pending PIT interupts */
-	NVIC_EnableIRQ(PIT_IRQn);														/*  Enable NVIC interrupts source for PIT */
+	NVIC_ClearPendingIRQ(PIT_IRQn);															/*  Clear NVIC pending PIT interupts */
+	NVIC_EnableIRQ(PIT_IRQn);																		/*  Enable NVIC interrupts source for PIT */
 	NVIC_SetPriority(PIT_IRQn, SONAR_INTERUPT_PRIORITY);				/*  Set PIT interrupt priority */	
 	
 	/* Enable TPM1 */
@@ -114,7 +114,6 @@ void TPM1_IRQHandler(void) {
 					 SonarState = SONAR_CAPTURE_OVERFLOW;										  /* set Sonar to CAPTURE_OVERFLOW state */
 					 fail++;
 					 SonarDistHandler(0u);
-					 SonarState = SONAR_IDLE;
 	}	
 }
 
@@ -131,26 +130,33 @@ void SendTrigger(void){
  *  Brief PIT IRQ
  ***********************************************/
 void PIT_IRQHandler(void){
-	//if (SonarMode == CONTINUOUS) {
-	if (SonarMode == CONTINUOUS) {
-		switch(SonarState) {
-			case SONAR_IDLE:
-					 //Servo_step();
-					 SendTrigger();
-					 break;
-			case SONAR_CAPTURE_OVERFLOW: 
-					 SendTrigger();
-					 Servo_step();
-					 break;
-			case SONAR_CAPTURE_END:
-					 Servo_step();
-					 SendTrigger();
-					 break;
-			default:
-					 //Servo_step();
-					 break;
+	/* CH1 ISR */
+	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
+		if (SonarMode == CONTINUOUS) {
+			switch(SonarState) {
+				case SONAR_IDLE:
+						 SendTrigger();
+						 break;
+				case SONAR_CAPTURE_OVERFLOW:
+						 if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
+						 SendTrigger();
+						 break;
+				case SONAR_CAPTURE_END:
+						 if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
+						 SendTrigger();
+						 break;
+				default:
+						 //Servo_step();
+						 break;
+			}
 		}
-	PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; 									 /* Clear Interupt Flag */
+		PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; 									   /* Clear Interupt Flag */
+	} else {
+		/* CH2 ISR */
+		/* Servo reached its destination. Stop countdown */
+		ServoState = IDLE;																						 /* Set sonar state to idle */
+		PIT->CHANNEL[1].TCTRL &= ~PIT_TCTRL_TEN_MASK;      						 /* Disable timer */
+		PIT->CHANNEL[1].TFLG  |= PIT_TFLG_TIF_MASK; 									 /* Clear Interupt Flag */
 	}
 }
 

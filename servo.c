@@ -1,8 +1,19 @@
 #include "servo.h"
-const uint16_t servo_step = ((SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN)/SERVO_SWEEP_STEPS_NBR);
+#include <math.h>
+
+/* Define servo movement direction in sweep mode */
 enum {RIGHT,LEFT} sweep_direction = RIGHT; 
 
-void Servo_init(void){
+/* Define Servo Work mode */
+ServoMode_t ServoMode = OFF; /* turn off servo by default */
+
+/* Define Servo Position */
+int32_t ServoPosition = 0;
+
+/* Define Servo State */
+ServoState_t ServoState = IDLE;
+
+void Servo_init(ServoMode_t InitialWorkMode){
 	/* Enable clock gating for TMP1 and I/O ports */
 	SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK; 
 	SIM->SCGC6 |= SIM_SCGC6_TPM2_MASK;
@@ -18,28 +29,63 @@ void Servo_init(void){
 	TPM2->CONTROLS[0].CnSC |= TPM_CnSC_ELSB_MASK | TPM_CnSC_MSB_MASK; /* set TPM0, channel 2 to edge-aligned PWM high-true pulses */
 	TPM2->CONTROLS[0].CnV = 1500*3; 																	/* Center servo. 1.5ms */
 	
+	/* Set servo mode */
+	ServoMode = InitialWorkMode;
+	
+	/* Initialize PIT for servo movement time tracking. Disable it at init. */
+	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;																	/* Enable PIT Clock Gating */
+	PIT->CHANNEL[1].LDVAL = 0xFFFF;																		/* set PIT Load Value */
+	PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TIE_MASK;  										/* Enable interrupts in PIT module on channel 1 */
+	PIT->CHANNEL[1].TCTRL &= ~PIT_TCTRL_TEN_MASK;  										/* Enable Timer on given channel on channel 1 */
+	
+	/* Enable PIT */
+	PIT->MCR = 0x00;
+	
 	/* Enable TPM2 */
 	TPM2->SC |= TPM_SC_CMOD(1);		
 }
 
-void Servo_step(){
-	uint16_t NewPosition = TPM2->CONTROLS[0].CnV;
+void Servo_sweep_step(){
+	int32_t NewPosition = ServoPosition;
 	
 	if (sweep_direction == RIGHT){
-		NewPosition += servo_step;
-		if (NewPosition >= SERVO_MOVEMENT_MAX){
-			sweep_direction = LEFT;
-			TPM2->CONTROLS[0].CnV = SERVO_MOVEMENT_MAX;
-		} else {
-			TPM2->CONTROLS[0].CnV = NewPosition;
-		}
+		NewPosition += SERVO_SWEEP_STEP_DEG;
+		if (NewPosition >= SERVO_MOVEMENT_RANGE) sweep_direction = LEFT;
 	} else {
-		NewPosition -= servo_step;
-		if (NewPosition <= SERVO_MOVEMENT_MIN){
-			sweep_direction = RIGHT;
-			TPM2->CONTROLS[0].CnV = SERVO_MOVEMENT_MIN;
-		} else {
-			TPM2->CONTROLS[0].CnV = NewPosition;
-		}		
+		NewPosition -= SERVO_SWEEP_STEP_DEG;
+		if (NewPosition <= -SERVO_MOVEMENT_RANGE) sweep_direction = RIGHT;
 	}
+	Servo_move_by_degree(NewPosition);	
 }
+
+
+void Servo_move_by_degree(int32_t degree){
+	uint32_t NewPosition,AngularDistance,TravelTime_ms;
+	/* First check if wanted degree is out of servo range. 
+		 If yes, set servo to maximum possible possition in wanted direction */
+	if (degree >= SERVO_MOVEMENT_RANGE ){
+		TPM2->CONTROLS[0].CnV = SERVO_MOVEMENT_MAX;
+	} else if ( degree <= -SERVO_MOVEMENT_RANGE ) {
+		TPM2->CONTROLS[0].CnV = SERVO_MOVEMENT_MIN;
+	} else { 
+		/* Recalculate degrees to us and set servo 
+			 For now assume that servo is linear */
+		NewPosition = (((degree+SERVO_MOVEMENT_RANGE))*(SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN))/(2*SERVO_MOVEMENT_RANGE);
+		NewPosition += SERVO_MOVEMENT_MIN;
+		TPM2->CONTROLS[0].CnV = NewPosition;
+				
+		/* Calculate servo movement distance and time */
+		AngularDistance = sqrt((degree-ServoPosition)*(degree-ServoPosition));
+		AngularDistance = ceil(AngularDistance);
+		TravelTime_ms = AngularDistance*1000/SERVO_ANGULAR_VELOCITY;
+		
+		/* Change Servo State to moving and update its oposition */
+		ServoState = MOVING;
+		ServoPosition = degree;
+		
+		/* Set PIT_CH2 to Travel Time and start countdown */
+		PIT->CHANNEL[1].LDVAL = TravelTime_ms*24E3;  			/* Clock runs at 24MHz */
+		PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TEN_MASK;      /* Enable timer */
+	}		
+};
+

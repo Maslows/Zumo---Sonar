@@ -3,11 +3,14 @@
 #include "servo.h"
 #include "sLCD.h"
 
+
 int main(void) {
 	sLCD_init();
 	Sonar_init(CONTINUOUS);
-	Servo_init();
+	Servo_init(SWEEP);
+
 	
-	while(1);
+	while(1){
+	};
 }
 	
