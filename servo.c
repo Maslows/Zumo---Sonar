@@ -76,7 +76,6 @@ void Servo_move_by_degree(int32_t degree){
 				
 		/* Calculate servo movement distance and time */
 		AngularDistance = sqrt((degree-ServoPosition)*(degree-ServoPosition));
-		AngularDistance = ceil(AngularDistance);
 		TravelTime_ms = AngularDistance*1000/SERVO_ANGULAR_VELOCITY;
 		
 		/* Change Servo State to moving and update its oposition */

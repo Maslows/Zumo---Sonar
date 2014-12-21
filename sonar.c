@@ -100,8 +100,9 @@ void TPM1_IRQHandler(void) {
 		} else  {	
 			  TPM1->SC |= TPM_SC_TOF_MASK;															   /* Clear TPM1 Overflow flag */
 				TPM1->SC &= ~TPM_SC_TOIE_MASK; 															 /* Disable TPM1 Overflow interupt */
-				SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_MM);  /* Execute user results handler */
 				SonarState = SONAR_CAPTURE_END;															 /* Change sonar state to CAPTURE_END */
+				SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM);  /* Execute user results handler */
+				SonarState = SONAR_IDLE;															 			 /* Change sonar state to CAPTURE_END */
 				success++;
 		}
 		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;										 /* clear TMP1_Ch0 flag */
@@ -112,8 +113,8 @@ void TPM1_IRQHandler(void) {
 					 TPM1->SC |= TPM_SC_TOF_MASK;															/* Clear TPM1 Overflow flag */
 					 TPM1->SC &= ~TPM_SC_TOIE_MASK; 													/* Disable TPM1 Overflow interupt */
 					 SonarState = SONAR_CAPTURE_OVERFLOW;										  /* set Sonar to CAPTURE_OVERFLOW state */
+					 SonarDistHandler(0u);																		/* Execute user results handler */
 					 fail++;
-					 SonarDistHandler(0u);
 	}	
 }
 
@@ -135,10 +136,10 @@ void PIT_IRQHandler(void){
 		if (SonarMode == CONTINUOUS) {
 			switch(SonarState) {
 				case SONAR_IDLE:
+						 if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
 						 SendTrigger();
 						 break;
 				case SONAR_CAPTURE_OVERFLOW:
-						 if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
 						 SendTrigger();
 						 break;
 				case SONAR_CAPTURE_END:
@@ -146,7 +147,6 @@ void PIT_IRQHandler(void){
 						 SendTrigger();
 						 break;
 				default:
-						 //Servo_step();
 						 break;
 			}
 		}
@@ -160,7 +160,50 @@ void PIT_IRQHandler(void){
 	}
 }
 
-void SonarDistHandler(uint16_t distance){
-	sLCD_DisplayDec(distance);
+void SonarStartMeas(void){
+	/* Wait for servo */
+	while (ServoState != IDLE){}; 
+		
+	/* Wait for sonar */
+  while (    SonarState != SONAR_CAPTURE_OVERFLOW 	
+					&& SonarState != SONAR_IDLE 
+					&& SonarState != SONAR_CAPTURE_END ){};
+	/* Send sonar trigger */
+	SendTrigger();
+}; 
+
+uint16_t SonarGetDistance(void){
+		/* Wait for servo */
+	while (ServoState != IDLE){}; 
+		
+	/* Wait for sonar */
+  while (    SonarState != SONAR_CAPTURE_OVERFLOW 	
+					&& SonarState != SONAR_IDLE 
+					&& SonarState != SONAR_CAPTURE_END ){};
+	/* Send sonar trigger */
+	SendTrigger();
+						
+	/* wait for results */
+  while (    SonarState != SONAR_CAPTURE_OVERFLOW 	
+					&& SonarState != SONAR_IDLE 
+					&& SonarState != SONAR_CAPTURE_END ){};
+						
+	return 	TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM;				
+}; 
+
+
+
+void SonarDistHandler(uint16_t distance_cm){
+	/* In case of failed measurment distance will be equal to 0
+		 You can get servo position at which the measurment was done from 
+		 the ServoPosition global variable */
+	
+	/* Your code here */
+	sLCD_DisplayDec(distance_cm);
+	
+	/* If you uncomment this line, sonar will proceed with the sweep
+		 even if the measurment failed. If you leave this line commented, then
+		 sonar will retry measurment untill usable data is obtained */	 
+	//SonarState = IDLE;
 }
 

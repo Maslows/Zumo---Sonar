@@ -6,11 +6,12 @@
 
 int main(void) {
 	sLCD_init();
-	Sonar_init(CONTINUOUS);
-	Servo_init(SWEEP);
+	Sonar_init(SINGLE);
+	Servo_init(OFF);
 
 	
 	while(1){
+		SonarStartMeas(); 
 	};
 }
 	

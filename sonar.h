@@ -3,11 +3,14 @@
 
 #include "MKL46Z4.h"                    // Device header
 
-#define SONAR_MAX_RANGE_CM 300
+#define SONAR_INTERUPT_PRIORITY 3
 #define SONAR_MEAS_INTERVAL_MS 50
+
+/* Not implemented yes */
+#define SONAR_MAX_RANGE_CM 300
 #define SONAR_AVG_MODE   0 // 0 - off, 1 – on
 #define SONAR_AVG_NUMBER 5
-#define SONAR_INTERUPT_PRIORITY 3
+/* Not implemented yes */
 
 
 /********************************************//**
@@ -42,5 +45,6 @@ extern SonarWorkModes SonarMode;
  ***********************************************/
 void Sonar_init(SonarWorkModes InitialWorkMode);
 void SonarDistHandler(uint16_t distance); 
-
+void SonarStartMeas(void); 
+uint16_t SonarGetDistance(void);
 #endif 
