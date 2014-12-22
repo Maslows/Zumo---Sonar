@@ -13,7 +13,7 @@ var indexSectionsWithContent =
   3: "fs",
   4: "s",
   5: "cilmors",
-  6: "ls",
+  6: "s",
   7: "t"
 };
 
