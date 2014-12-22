@@ -1,18 +1,39 @@
 #include "servo.h"
 #include <math.h>
 
-/* Define servo movement direction in sweep mode */
+/**
+	@brief Define servo movement direction in sweep mode 
+	@warning Do NOT modify this! Doing so might result in damaging a servo.
+*/
 enum {RIGHT,LEFT} sweep_direction = RIGHT; 
 
-/* Define Servo Work mode */
-ServoMode_t ServoMode = OFF; /* turn off servo by default */
+/** 
+	@brief Define Servo Work mode 
+  Turn off servo by default
+*/
+ServoMode_t ServoMode = OFF; 
 
-/* Define Servo Position */
+/**
+ @brief Define Servo Position in degrees.
+ This variable contains predicted position of a servo. 
+ @warning This is only the prediction and might have some
+          error due to wrong value of ::SERVO_MOVEMENT_RANGE
+          or due to nonlinearity of a servo.
+*/
 int32_t ServoPosition = 0;
 
-/* Define Servo State */
+/**
+	@brief Define Servo current state 
+*/
 ServoState_t ServoState = IDLE;
 
+
+/**
+	@brief Initialize Servo
+	Initialize all necessary peripherals needed for servo control
+	@param InitialWorkMode Define in which mode should servo operate
+	@warning This function must be called AFTER ::Sonar_init !
+*/
 void Servo_init(ServoMode_t InitialWorkMode){
 	/* Enable clock gating for TMP1 and I/O ports */
 	SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK; 
@@ -45,6 +66,11 @@ void Servo_init(ServoMode_t InitialWorkMode){
 	TPM2->SC |= TPM_SC_CMOD(1);		
 }
 
+/** 
+	@brief Execute a sweep step
+	Each time this function is called, servo will move by ::SERVO_SWEEP_STEP_DEG in
+  ::sweep_direction. If it reaches ::SERVO_MOVEMENT_MAX it will change the direction of the sweep
+*/
 void Servo_sweep_step(){
 	int32_t NewPosition = ServoPosition;
 	
@@ -58,7 +84,15 @@ void Servo_sweep_step(){
 	Servo_move_by_degree(NewPosition);	
 }
 
+/**
+	@brief Move servo to a given position in degrees
+	This function allows movment of servo in a direction specified by an angle.
+  It will try to predict requied time needed by servo to finish rotation and set 
+  PIT_CH2 to countdown. It will also update ::ServoState appropriately.
 
+	@remarks Avoid calling this function while servo is already moving.
+  @param degree Desired new position, calculated from servo's normal.
+*/
 void Servo_move_by_degree(int32_t degree){
 	uint32_t NewPosition,AngularDistance,TravelTime_ms;
 	/* First check if wanted degree is out of servo range. 

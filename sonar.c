@@ -1,18 +1,45 @@
 #include "sonar.h"
 #include "servo.h"
 #include "sLCD.h"
-#define SONAR_TICKS_PER_CM 87u		 /*  Tick = 2/3us. 1cm ~ 54us.   1cm = 87 ticks */
-#define SONAR_TICKS_PER_MM 8.7f 	 /* TODO: Include temperature influence on speed of sound */
 
+/**
+	@brief Define number of TPM1 ticks per 1cm
+	At 48MHz, 1 Tick coresponds to 2/3us. Knowing that 1cm ~ 54us we obtain 1cm = 87 ticks
+	This value is only an aproximation as it does not take into account variance of speed of
+	sound due to temperature and humidity 
+	@todo Modify this parameter to include variance of speed of sound due to temperature
+*/
+#define SONAR_TICKS_PER_CM 87u		 
+
+/** 
+	@brief Define sonar work mode
+	
+	This variable sets sonar work mode. You can set it to different mode
+	during run time
+*/
 SonarWorkModes SonarMode = SINGLE; /** Default sonar work mode is SINGLE */
-SonarFSM SonarState = SONAR_IDLE;  /** Initialize sonar state to IDLE */
 
-/* Debug variables */
+/**
+	@brief Defines current sonar state.
+	@warning {Do NOT change this anywhere except SonarDistHandler(). 
+						Doing so might result in deadlock.}
+*/
+SonarFSM SonarState = SONAR_IDLE;  
+
+/**
+	@brief Debug variable containing number of successful measurments
+*/
 uint32_t success =0;
+
+/**
+	@brief Debug variable containing number of failed measurments
+*/
 uint32_t fail =0;
-/********************************************//**
- *  Brief Initialize Sonar and required peripherials
- ***********************************************/
+
+/**
+ @brief Initialize Sonar and required peripherials
+ @param InitialWorkMode Set initial sonar work mode
+*/
 void Sonar_init(SonarWorkModes InitialWorkMode){
 	double pit_interval = 0.0;													
 
@@ -76,14 +103,15 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 }
 
 
-/********************************************//**
- *  Brief TPM1 interupt handler
- *  Check which channel triggered interupt
- *  CH0  - If sonar state is TRIGGER_SENT, clear counter and set sonar state to CAPTURE_START
- *         If sonar state is CAPTURE_START, process the result and set sonar state to CAPTURE_END
- *  CH1  - Turn off trigger pin which was set maunally or by PIT in countinous mode
- *  Timer Overflow - Set sonar to CAPTURE_OVERFLOW state 
- ***********************************************/
+/**
+ @brief TPM1 interupt handler
+
+ Check which channel triggered interupt:
+ - CH0: If sonar state is TRIGGER_SENT, clear counter and set sonar state to CAPTURE_START\n
+      If sonar state is CAPTURE_START, process the result and set sonar state to CAPTURE_END
+ - CH1:  Turn off trigger pin which was set maunally or by PIT in countinous mode
+ - Timer Overflow: Set sonar to CAPTURE_OVERFLOW state 
+*/
 void TPM1_IRQHandler(void) {
 	/* Ch1 ISR */
 	if (TPM1->CONTROLS[1].CnSC & TPM_CnSC_CHF_MASK) {
@@ -118,6 +146,12 @@ void TPM1_IRQHandler(void) {
 	}	
 }
 
+/**
+	@brief Send a single trigger
+	
+	Function sets GPIO pin high and resets TPM1 counter. When it reaches 10us TPM1
+	ISR turns off the pin.
+*/
 void SendTrigger(void){
 		SonarState = SONAR_TRIGGER_SENT;
 		TPM1->CONTROLS[1].CnSC |= TPM_CnSC_CHIE_MASK;								 /* Enable TMP1_Ch1 interupts */
@@ -127,9 +161,12 @@ void SendTrigger(void){
 		FPTE->PSOR |= (1 << 21);																		 /* Toggle Trigger pin on */
 }
 
-/********************************************//**
- *  Brief PIT IRQ
- ***********************************************/
+/**
+ @brief PIT ISR 
+ This function chandels PIT interupts
+ - Channel 1: Controls the continous work of the sonar
+ - Channel 2: Used to keep track of servo movement time.
+*/
 void PIT_IRQHandler(void){
 	/* CH1 ISR */
 	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
@@ -160,6 +197,12 @@ void PIT_IRQHandler(void){
 	}
 }
 
+/** 
+	@brief Initialize a single sonar measurment
+	This function can be used to trigger a single measurment. 
+	Interupt will trigger ::SonarDistHandler.
+	@warning This function uses busy-waiting to check servo and sonar readiness
+*/
 void SonarStartMeas(void){
 	/* Wait for servo */
 	while (ServoState != IDLE){}; 
@@ -172,6 +215,13 @@ void SonarStartMeas(void){
 	SendTrigger();
 }; 
 
+
+/** 
+	@brief Initialize a single sonar measurment and return distance in cm.
+	This function can be used to trigger a single measurment. 
+	@warning This function uses busy-waiting to check servo and sonar readiness
+	@return Measured distance in cm
+*/
 uint16_t SonarGetDistance(void){
 		/* Wait for servo */
 	while (ServoState != IDLE){}; 
@@ -191,13 +241,18 @@ uint16_t SonarGetDistance(void){
 	return 	TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM;				
 }; 
 
-
-
-void SonarDistHandler(uint16_t distance_cm){
-	/* In case of failed measurment distance will be equal to 0
-		 You can get servo position at which the measurment was done from 
-		 the ServoPosition global variable */
-	
+/** 
+	@brief User handler for sonar measurment results
+	This function handles results from sonar's continuous measurments.
+	It is also called when user triggered single measurment finishes.
+  User can specify here what to do with the results.
+	If sonar is used, user can obtain the angle at which the measurment was taken
+  by reading global variable ::ServoPosition
+	@param distance_cm Measured distance in cm. 
+				 If measurment failed or was out of range
+				 function will be called with parameter 0.
+*/
+void SonarDistHandler(uint16_t distance_cm){	
 	/* Your code here */
 	sLCD_DisplayDec(distance_cm);
 	

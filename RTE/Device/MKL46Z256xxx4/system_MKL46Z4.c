@@ -43,7 +43,7 @@
  * @file MKL46Z4
  * @version 2.2
  * @date 2013-04-12
- * @brief Device specific configuration file for MKL46Z4 (implementation file)
+ * @\brief Device specific configuration file for MKL46Z4 (implementation file)
  *
  * Provides a system configuration function and a global variable that contains
  * the system frequency. It configures the device and initializes the oscillator
