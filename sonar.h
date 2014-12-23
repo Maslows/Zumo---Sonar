@@ -15,7 +15,7 @@
  measurmend speed but it will also make sonar more prone to residiual echo from previous measurments.
  @warning Setting this to less than 35ms may produce sensor unsuable due to overlaping echos. 
 */
-#define SONAR_MEAS_INTERVAL_MS 50
+#define SONAR_MEAS_INTERVAL_MS 40
 
 /**
  @brief Defines maximum wanted range of a sonar

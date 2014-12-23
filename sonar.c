@@ -1,6 +1,8 @@
 #include "sonar.h"
 #include "servo.h"
 #include "sLCD.h"
+#include <cstdio>
+#include "uart.h"
 
 /**
 	@brief Define number of TPM1 ticks per 1cm
@@ -254,11 +256,16 @@ uint16_t SonarGetDistance(void){
 */
 void SonarDistHandler(uint16_t distance_cm){	
 	/* Your code here */
-	sLCD_DisplayDec(distance_cm);
-	
+	char buffor[80];
+	sprintf(buffor, "%04hu\n",distance_cm);
+	UART_WriteString(buffor);
+	if (RxQ.Size != 0){
+		UART_ReadString(buffor,RxQ.Size);
+		UART_WriteString(buffor);
+  }
 	/* If you uncomment this line, sonar will proceed with the sweep
 		 even if the measurment failed. If you leave this line commented, then
 		 sonar will retry measurment untill usable data is obtained */	 
-	//SonarState = IDLE;
+	SonarState = SONAR_IDLE;
 }
 

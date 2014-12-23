@@ -2,16 +2,18 @@
 #include "sonar.h"
 #include "servo.h"
 #include "sLCD.h"
+#include "uart.h"
 
 
 int main(void) {
 	sLCD_init();
-	Sonar_init(SINGLE);
-	Servo_init(OFF);
+	UART0_init(115200);
+	Sonar_init(CONTINUOUS);
+	Servo_init(MANUAL);
 
 	
-	while(1){
-		SonarStartMeas(); 
+	while(1){ 
+		
 	};
 }
 	

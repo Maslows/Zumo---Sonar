@@ -38,7 +38,7 @@
  @brief Define sweep step in degrees
  This marco defines a sweep step. Every step servo will rotate by this value.
 */
-#define SERVO_SWEEP_STEP_DEG 60      									/* Sweep step in degrees */
+#define SERVO_SWEEP_STEP_DEG 30      									/* Sweep step in degrees */
 
 /** 
 		@brief Define Servo angular velocity in deg/s
