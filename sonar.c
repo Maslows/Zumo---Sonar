@@ -132,6 +132,7 @@ void TPM1_IRQHandler(void) {
 				TPM1->SC &= ~TPM_SC_TOIE_MASK; 															 /* Disable TPM1 Overflow interupt */
 				SonarState = SONAR_CAPTURE_END;															 /* Change sonar state to CAPTURE_END */
 				SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM);  /* Execute user results handler */
+				if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
 				SonarState = SONAR_IDLE;															 			 /* Change sonar state to CAPTURE_END */
 				success++;
 		}
@@ -175,14 +176,9 @@ void PIT_IRQHandler(void){
 		if (SonarMode == CONTINUOUS) {
 			switch(SonarState) {
 				case SONAR_IDLE:
-						 if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
-						 SendTrigger();
+						 if (ServoState == IDLE) SendTrigger();
 						 break;
 				case SONAR_CAPTURE_OVERFLOW:
-						 SendTrigger();
-						 break;
-				case SONAR_CAPTURE_END:
-						 if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
 						 SendTrigger();
 						 break;
 				default:
@@ -257,7 +253,7 @@ uint16_t SonarGetDistance(void){
 void SonarDistHandler(uint16_t distance_cm){	
 	/* Your code here */
 	char buffor[80];
-	sprintf(buffor, "%04hu\n",distance_cm);
+	sprintf(buffor, "%04d,%04hu\n",ServoPosition,distance_cm);
 	UART_WriteString(buffor);
 	if (RxQ.Size != 0){
 		UART_ReadString(buffor,RxQ.Size);
@@ -266,6 +262,6 @@ void SonarDistHandler(uint16_t distance_cm){
 	/* If you uncomment this line, sonar will proceed with the sweep
 		 even if the measurment failed. If you leave this line commented, then
 		 sonar will retry measurment untill usable data is obtained */	 
-	SonarState = SONAR_IDLE;
+	//SonarState = SONAR_IDLE;
 }
 

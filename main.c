@@ -7,9 +7,9 @@
 
 int main(void) {
 	sLCD_init();
-	UART0_init(115200);
+	UART0_init(115200u);
 	Sonar_init(CONTINUOUS);
-	Servo_init(MANUAL);
+	Servo_init(SWEEP);
 
 	
 	while(1){ 
