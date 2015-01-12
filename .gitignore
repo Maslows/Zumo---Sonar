@@ -5,6 +5,8 @@
 *.bak
 *.dep
 *.uvgui.*
+*.uvguix.*
+*.uvproj
 JLinkLog.txt
 *.o
 *.d
