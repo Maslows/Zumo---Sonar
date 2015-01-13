@@ -70,8 +70,10 @@ void UART0_init(uint32_t baud_rate) {
 	SIM->SOPT2 |= SIM_SOPT2_PLLFLLSEL_MASK;
 	
 	// connect UART to pins for PTA1 PTA2
-	PORTA->PCR[1] = PORT_PCR_MUX(2);
-	PORTA->PCR[2] = PORT_PCR_MUX(2);
+	PORTA->PCR[15] = PORT_PCR_MUX(3);
+	PORTA->PCR[14] = PORT_PCR_MUX(3);
+	//PORTA->PCR[1] = PORT_PCR_MUX(2);
+	//PORTA->PCR[2] = PORT_PCR_MUX(2);
 	
 	// ensure tx and rx are disabled before configuration
 	UART0->C2 &= ~(UART_C2_TE_MASK | UART_C2_RE_MASK);
