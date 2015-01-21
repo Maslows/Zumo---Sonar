@@ -52,9 +52,8 @@
 /** 
 		@brief Define Servo work modes
 */
-typedef enum { SWEEP, /**< Constant sweep with step ::SERVO_SWEEP_STEP_DEG */
+typedef enum { SWEEP,  /**< Constant sweep with step ::SERVO_SWEEP_STEP_DEG */
 							 MANUAL, /**< Manual operation. You can set servo position by ::Servo_move_by_degree */
-							 OFF /**< Servo is not used */
 } ServoMode_t;
 
 /** 

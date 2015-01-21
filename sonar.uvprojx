@@ -147,7 +147,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -161,7 +161,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>PEMicro\Pemicro_ArmCortexInterface.dll</Driver>
+            <Driver>BIN\CMSIS_AGDI.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -444,14 +444,19 @@
               <FilePath>.\servo.h</FilePath>
             </File>
             <File>
-              <FileName>uart.c</FileName>
+              <FileName>motorDriver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\uart.c</FilePath>
+              <FilePath>.\motorDriver.c</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>bluetooth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\bluetooth.c</FilePath>
+            </File>
+            <File>
+              <FileName>bluetooth.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\uart.h</FilePath>
+              <FilePath>.\bluetooth.h</FilePath>
             </File>
           </Files>
         </Group>

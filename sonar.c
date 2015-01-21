@@ -2,7 +2,7 @@
 #include "servo.h"
 #include "sLCD.h"
 #include <cstdio>
-#include "uart.h"
+#include "bluetooth.h"
 
 /**
 	@brief Define number of TPM1 ticks per 1cm
@@ -39,6 +39,12 @@ uint32_t success =0;
 uint32_t fail =0;
 
 /**
+	@brief Debug variable containing number of failed measurments
+*/
+#define sonar_maxtry 2
+uint32_t overflow_timeout = 0;
+
+/**
  @brief Initialize Sonar and required peripherials
  @param InitialWorkMode Set initial sonar work mode
 */
@@ -61,7 +67,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	/* Set TMP1 */
 	TPM1->SC |= TPM_SC_PS(0x5);													/* Set clock prescaler to divide by 32. 1 Tick = 2/3us */
 	TPM1->CNT = 0;																			/* Clear counter value */	
-	TPM1->MOD = (35000*3)/2;                            /* Set max echo length to 35ms */
+	TPM1->MOD = (25000*3)/2;                            /* Set max echo length to 25ms */
 																											
 
 	/* Configure TMP1_CH0. Echo Measurement*/
@@ -127,14 +133,21 @@ void TPM1_IRQHandler(void) {
 		if ( SonarState == SONAR_TRIGGER_SENT ) {
 				TPM1->CNT = 0; 																							 /* Reset counter */
 				SonarState = SONAR_CAPTURE_START;														 /* Change sonar state to CAPTURE_START */										 
-		} else  {	
+		} else if (SonarState == SONAR_CAPTURE_START) {	
 			  TPM1->SC |= TPM_SC_TOF_MASK;															   /* Clear TPM1 Overflow flag */
 				TPM1->SC &= ~TPM_SC_TOIE_MASK; 															 /* Disable TPM1 Overflow interupt */
 				SonarState = SONAR_CAPTURE_END;															 /* Change sonar state to CAPTURE_END */
 				SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM);  /* Execute user results handler */
-				if (ServoMode == SWEEP && ServoState == IDLE) Servo_sweep_step();
-				SonarState = SONAR_IDLE;															 			 /* Change sonar state to CAPTURE_END */
+			
+				if (ServoMode == SWEEP && ServoState == IDLE) {						 /* Execute next servo step if enabled */
+					Servo_sweep_step();
+				}
+				
+				SonarState = SONAR_IDLE;															 			 /* Change sonar state to IDLE */
 				success++;
+		} else if ( SonarState == SONAR_CAPTURE_OVERFLOW ) {
+				/* Wait until echo output is low */
+			  SonarState = SONAR_IDLE;
 		}
 		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;										 /* clear TMP1_Ch0 flag */
 	} 
@@ -173,18 +186,23 @@ void SendTrigger(void){
 void PIT_IRQHandler(void){
 	/* CH1 ISR */
 	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
-		if (SonarMode == CONTINUOUS) {
 			switch(SonarState) {
 				case SONAR_IDLE:
-						 if (ServoState == IDLE) SendTrigger();
+						 if (ServoState == IDLE && SonarMode == CONTINUOUS) SendTrigger();
 						 break;
 				case SONAR_CAPTURE_OVERFLOW:
-						 SendTrigger();
+						 if ( (overflow_timeout++ > sonar_maxtry) && ServoMode == SWEEP) {
+							SonarState = SONAR_IDLE;
+							Servo_sweep_step();
+							overflow_timeout = 0;
+						 } else {
+							 SendTrigger();
+						 }
 						 break;
 				default:
 						 break;
 			}
-		}
+
 		PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; 									   /* Clear Interupt Flag */
 	} else {
 		/* CH2 ISR */
@@ -202,6 +220,10 @@ void PIT_IRQHandler(void){
 	@warning This function uses busy-waiting to check servo and sonar readiness
 */
 void SonarStartMeas(void){
+	
+	/* change sonar mode to single */
+	SonarMode = SINGLE;
+	
 	/* Wait for servo */
 	while (ServoState != IDLE){}; 
 		
@@ -252,13 +274,10 @@ uint16_t SonarGetDistance(void){
 */
 void SonarDistHandler(uint16_t distance_cm){	
 	/* Your code here */
-	char buffor[80];
+	char buffor[12];
 	sprintf(buffor, "%04d,%04hu\n",ServoPosition,distance_cm);
-	UART_WriteString(buffor);
-	if (RxQ.Size != 0){
-		UART_ReadString(buffor,RxQ.Size);
-		UART_WriteString(buffor);
-  }
+	bt_sendStr(buffor);
+
 	/* If you uncomment this line, sonar will proceed with the sweep
 		 even if the measurment failed. If you leave this line commented, then
 		 sonar will retry measurment untill usable data is obtained */	 
