@@ -7,7 +7,7 @@
 /**
  @brief Define sonar IRQ priority
 */
-#define SONAR_INTERUPT_PRIORITY 3
+#define SONAR_INTERUPT_PRIORITY 2
 
 /**
  @brief Define sonar measurment interval.

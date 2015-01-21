@@ -9,9 +9,9 @@ enum {RIGHT,LEFT} sweep_direction = RIGHT;
 
 /** 
 	@brief Define Servo Work mode 
-  Turn off servo by default
+  Manual mode is default.
 */
-ServoMode_t ServoMode = OFF; 
+ServoMode_t ServoMode = MANUAL; 
 
 /**
  @brief Define Servo Position in degrees.
