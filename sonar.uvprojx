@@ -424,16 +424,6 @@
               <FilePath>.\sonar.h</FilePath>
             </File>
             <File>
-              <FileName>sLCD.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sLCD.c</FilePath>
-            </File>
-            <File>
-              <FileName>sLCD.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\sLCD.h</FilePath>
-            </File>
-            <File>
               <FileName>servo.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\servo.c</FilePath>

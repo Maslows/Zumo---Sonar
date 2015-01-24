@@ -41,6 +41,12 @@
 */
 #define SONAR_AVG_NUMBER 5
 
+/**
+	@brief Define maximum number of measurment retries.
+	In #SINGLE mode when sonar fails to obtain usable data after #SONAR_MAXTRY it will return 0
+	In #CONTINOUS mode it will proceed with next sweep step
+*/
+#define SONAR_MAXTRY 2
 
 /**
  @brief Define Sonar FSM states

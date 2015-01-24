@@ -47,7 +47,7 @@
 		You can try tweeking this value for better performance in your setup 
 		@warning Do not set this value too high as it may damage the servo
 */																					 
-#define SERVO_ANGULAR_VELOCITY 240										
+#define SERVO_ANGULAR_VELOCITY 200										
 
 /** 
 		@brief Define Servo work modes

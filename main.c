@@ -1,7 +1,6 @@
 #include "MKL46Z4.h"                    // Device header
 #include "sonar.h"
 #include "servo.h"
-#include "sLCD.h"
 #include "bluetooth.h"
 #include "motordriver.h"
 
@@ -19,6 +18,7 @@ int main(void) {
 	Sonar_init(CONTINUOUS);
 	Servo_init(MANUAL);
 	motorDriverInit();
+	
 
 	
 	while(1){ 

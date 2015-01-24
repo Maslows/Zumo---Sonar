@@ -1,6 +1,5 @@
 #include "sonar.h"
 #include "servo.h"
-#include "sLCD.h"
 #include <cstdio>
 #include "bluetooth.h"
 
@@ -41,8 +40,12 @@ uint32_t fail =0;
 /**
 	@brief Debug variable containing number of failed measurments
 */
-#define sonar_maxtry 2
-uint32_t overflow_timeout = 0;
+uint8_t overflow_timeout = 0;
+
+/**
+	@brief Echo pin mask
+*/
+#define ECHO_MASK (1 << 20)
 
 /**
  @brief Initialize Sonar and required peripherials
@@ -75,8 +78,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 												 | 	TPM_CnSC_ELSA_MASK  /* Rising and falling edge detection */
 												 |  TPM_CnSC_CHIE_MASK; /* Enable channel interupts */
 
-						
-												 
+										 
 	/* Configure TMP1_CH1. Trigger */
 	TPM1->CONTROLS[1].CnSC |= TPM_CnSC_MSA_MASK 	/* Set Ch1 to software compare mode. */
 																								/* Ch1 output is not controlled by TPM1! */
@@ -105,7 +107,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	
 	/* Enable TPM1 */
 	TPM1->SC |= TPM_SC_CMOD(1);
-	
+
 	/* Enable PIT */
 	PIT->MCR = 0x00;
 }
@@ -121,43 +123,53 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
  - Timer Overflow: Set sonar to CAPTURE_OVERFLOW state 
 */
 void TPM1_IRQHandler(void) {
-	/* Ch1 ISR */
+	/* Ch1 ISR - trigger pin control */
 	if (TPM1->CONTROLS[1].CnSC & TPM_CnSC_CHF_MASK) {
 					FPTE->PCOR |= (1 << 21);  															 			 /* Turn off trigger pin*/					
 					TPM1->CONTROLS[1].CnSC &= ~TPM_CnSC_CHIE_MASK;								 /* Disable TMP1_Ch1 interupts */ 
 					TPM1->CONTROLS[1].CnSC |= TPM_CnSC_CHF_MASK;									 /* Clear TMP1_Ch1 flag */
 	} 
 	
-	/* Ch0 ISR */
-	if (TPM1->CONTROLS[0].CnSC & TPM_CnSC_CHF_MASK) {
-		if ( SonarState == SONAR_TRIGGER_SENT ) {
-				TPM1->CNT = 0; 																							 /* Reset counter */
-				SonarState = SONAR_CAPTURE_START;														 /* Change sonar state to CAPTURE_START */										 
-		} else if (SonarState == SONAR_CAPTURE_START) {	
-			  TPM1->SC |= TPM_SC_TOF_MASK;															   /* Clear TPM1 Overflow flag */
-				TPM1->SC &= ~TPM_SC_TOIE_MASK; 															 /* Disable TPM1 Overflow interupt */
-				SonarState = SONAR_CAPTURE_END;															 /* Change sonar state to CAPTURE_END */
-				SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM);  /* Execute user results handler */
+	/* Ch0 ISR - echo measurment */
+	else if (TPM1->CONTROLS[0].CnSC & TPM_CnSC_CHF_MASK) {
+		/* Check if it's rising edge interupt or falling edge interupt */
+		
+		/* Rising edge */
+		if ((FPTE->PDIR & ECHO_MASK) && SonarState == SONAR_TRIGGER_SENT){ 
+				TPM1->CNT = 0; 																							 	   /* Reset counter */
+				SonarState = SONAR_CAPTURE_START;														 		 /* Change sonar state to CAPTURE_START */	
 			
-				if (ServoMode == SWEEP && ServoState == IDLE) {						 /* Execute next servo step if enabled */
-					Servo_sweep_step();
-				}
-				
-				SonarState = SONAR_IDLE;															 			 /* Change sonar state to IDLE */
-				success++;
-		} else if ( SonarState == SONAR_CAPTURE_OVERFLOW ) {
-				/* Wait until echo output is low */
-			  SonarState = SONAR_IDLE;
-		}
+		/* Falling edge */	
+		} else if (!(FPTE->PDIR & ECHO_MASK)) {	
+				/* Check if timer overflowed while echo was high */
+				if ( TPM1->SC & TPM_SC_TOF_MASK )	{
+					SonarState = SONAR_CAPTURE_OVERFLOW;												/* set Sonar to CAPTURE_OVERFLOW state */
+					TPM1->SC |= TPM_SC_TOF_MASK;															  /* Clear TPM1 Overflow flag */
+					fail++;
+					
+					/* Successful measurment */
+				} else { 
+					SonarState = SONAR_CAPTURE_END;															/* Change sonar state to SONAR_CAPTURE_END */
+					SonarDistHandler(TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM); /* Execute user results handler */	
+				  if (ServoMode == SWEEP) {						 												/* Execute next servo step if enabled */
+						Servo_sweep_step();
+				  }
+					SonarState = SONAR_IDLE;																		/* Change sonar state to IDLE */
+					success++;
+				} 
+				TPM1->SC &= ~TPM_SC_TOIE_MASK; 																/* Disable TPM1 Overflow interupt */
+		}   
 		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;										 /* clear TMP1_Ch0 flag */
 	} 
 	
-	/* TPM1 overflow handler */ 
-	if ((TPM1->SC & TPM_SC_TOF_MASK ) && (TPM1->SC & TPM_SC_TOIE_MASK )) {
+	/* TPM1 overflow handler - set sonar to idle only if echo pin is low and sonar is not IDLE*/ 
+	else {
 					 TPM1->SC |= TPM_SC_TOF_MASK;															/* Clear TPM1 Overflow flag */
 					 TPM1->SC &= ~TPM_SC_TOIE_MASK; 													/* Disable TPM1 Overflow interupt */
-					 SonarState = SONAR_CAPTURE_OVERFLOW;										  /* set Sonar to CAPTURE_OVERFLOW state */
-					 SonarDistHandler(0u);																		/* Execute user results handler */
+					 if (!(FPTE->PDIR & ECHO_MASK)) {
+						SonarState = SONAR_CAPTURE_OVERFLOW;										  /* set Sonar to CAPTURE_OVERFLOW state */
+					 }
+					 //SonarDistHandler(0u);																	/* Execute user results handler */
 					 fail++;
 	}	
 }
@@ -170,9 +182,9 @@ void TPM1_IRQHandler(void) {
 */
 void SendTrigger(void){
 		SonarState = SONAR_TRIGGER_SENT;
-		TPM1->CONTROLS[1].CnSC |= TPM_CnSC_CHIE_MASK;								 /* Enable TMP1_Ch1 interupts */
 		TPM1->SC |= TPM_SC_TOF_MASK;															   /* Clear TPM1 Overflow flag */
 		TPM1->SC |= TPM_SC_TOIE_MASK; 											         /* Enable TPM1 Overflow interupt */
+	  TPM1->CONTROLS[1].CnSC |= TPM_CnSC_CHIE_MASK;						     /* Enable TMP1_Ch1 interupts */
 		TPM1->CNT = 0; 																							 /* Reset counter */
 		FPTE->PSOR |= (1 << 21);																		 /* Toggle Trigger pin on */
 }
@@ -188,12 +200,14 @@ void PIT_IRQHandler(void){
 	if (PIT->CHANNEL[0].TFLG & PIT_TFLG_TIF_MASK) {
 			switch(SonarState) {
 				case SONAR_IDLE:
-						 if (ServoState == IDLE && SonarMode == CONTINUOUS) SendTrigger();
+						 if (ServoState == IDLE && SonarMode == CONTINUOUS) {
+							 SendTrigger();
+						 }
 						 break;
 				case SONAR_CAPTURE_OVERFLOW:
-						 if ( (overflow_timeout++ > sonar_maxtry) && ServoMode == SWEEP) {
-							SonarState = SONAR_IDLE;
+						 if ( (overflow_timeout++ > SONAR_MAXTRY) && ServoMode == SWEEP) {
 							Servo_sweep_step();
+							SonarState = SONAR_IDLE;
 							overflow_timeout = 0;
 						 } else {
 							 SendTrigger();
