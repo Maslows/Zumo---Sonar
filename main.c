@@ -49,8 +49,12 @@ int main(void) {
 				Servo_move_by_degree(0);
 			}
 			else if ( strcmp(tab, "SonarStartMeas") == 0) {
-				Servo_move_by_degree(0);
-				SonarStartMeas();
+				SonarStartMeas(0);
+			}
+			else if ( strcmp(tab, "SonarGetDistance") == 0) {
+				char buffor[12];
+				sprintf(buffor, "%04d,%04hu\n",30,SonarGetDistance(30));
+				bt_sendStr(buffor);
 			}
 			else if ( strcmp(tab, "e") == 0) {
 				if (speed<=90){

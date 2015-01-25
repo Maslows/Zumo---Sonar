@@ -153,22 +153,27 @@
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>overflow_timeout,0x0A</ItemText>
+          <ItemText>result,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>AvgBuffer,0x0A</ItemText>
+          <ItemText>SonarMode</ItemText>
         </Ww>
         <Ww>
           <count>4</count>
           <WinNumber>1</WinNumber>
-          <ItemText>result,0x0A</ItemText>
+          <ItemText>SingleResult</ItemText>
         </Ww>
         <Ww>
           <count>5</count>
           <WinNumber>1</WinNumber>
-          <ItemText>TxBuf</ItemText>
+          <ItemText>retry_counter</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>AvgBuffer,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

@@ -28,7 +28,7 @@ uint32_t success = 0;
 /**
 	@brief Debug variable containing total number of failed measurments
 */
-uint32_t fail =0;
+uint32_t fail = 0;
 
 /**
 	@brief Variable containing number of failed measurments tries; Used to timeout measurment.
@@ -49,6 +49,14 @@ uint16_t AvgBuffer[SONAR_AVG_NUMBER];
 	@brief Pointer indicating last measurement sample in ::AvgBuffer
 */
 uint8_t AvgPointer = 0;
+
+/**
+	@brief Variable containing single measurment result. It is also used to determind how to return result to the user.
+	If this variable is set to -1 before measurement, Sonar will set it to obtained result.
+	If this variable is set to 0, Sonar will trigger ::SonarDistHandler with obtained result.
+	@warning Do not read or write this value manualy!
+*/
+int16_t SingleResult = 0;
 
 
 /**
@@ -93,7 +101,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	NVIC_SetPriority (TPM1_IRQn, SONAR_INTERUPT_PRIORITY);
 
 	/* Set initial sonar work mode */
-	SonarMode = InitialWorkMode;
+	SonarChangeMode(InitialWorkMode);
 
 	
 	/* Configure NVIC for PIT interupt */
@@ -106,6 +114,20 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 
 }
 
+/** 
+ @brief Helper function which returns result in case of single measurement. 
+*/
+void ReturnSingleMeas(uint16_t result){
+	DisableSonar();															
+	/* Check how to return data */
+	switch(SingleResult){
+		case 0: SonarDistHandler(result, ServoPosition); 												/* Execute user results handler */
+		break;	
+		
+		case -1: SingleResult = result;																					/* Set variable to obtained result */
+		break;
+	}
+}
 
 /**
  @brief TPM1 interupt handler
@@ -132,8 +154,8 @@ void TPM1_IRQHandler(void) {
 			if ( TPM1->SC & TPM_SC_TOF_MASK )	{
 				TPM1->SC |= TPM_SC_TOF_MASK;															  /* Clear TPM1 Overflow flag */
 				fail++;																											/* Increment debug variable */
-				retry_counter++;																					/* Increment overflow counter */ 
-				
+				retry_counter++;																					  /* Increment overflow counter */ 
+				TPM1->CONTROLS[1].CnV = 15u;																/* Enable trigger */
 				/* If we reach retry limit, proceed with next sweep step */
 				if (ServoMode == SWEEP && retry_counter > SONAR_MAXTRY) {
 					retry_counter = 0;																														/* reset retry counter */
@@ -160,35 +182,58 @@ void TPM1_IRQHandler(void) {
 				} else {
 					/* If obtained sample is out of range, increment timeout counter */ 
 					retry_counter++;
+					TPM1->CONTROLS[1].CnV = 15u;																									/* Enable trigger */
 				}
 				
 				/* Depending on the settings, decide what to do next with obtained result */
 				
 				/* If Servo is in SWEEP mode and we collect SONAR_AVG_NUMBER samples
 					 call user handler and procceed with the sweep */
-				if (ServoMode == SWEEP && AvgPointer == 0) {						 												/* Execute next servo step if enabled */
+				if (ServoMode == SWEEP && AvgPointer == 0 && retry_counter == 0) {						 	/* Execute next servo step if enabled */
 					SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */	
 					Servo_sweep_step();
-					
-				/* If Servo is in manual mode, just call user handler */	
-				} else if ( ServoMode == MANUAL ) {
-					SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */	
-					
+				}	
 				/* If measurment is successful but result is out of range	SONAR_MAXTRY times
 					 proceed with sweep */
-				} else if (retry_counter > SONAR_MAXTRY ) {
+			  else if (ServoMode == SWEEP && retry_counter > SONAR_MAXTRY ) {
 					retry_counter = 0;																													/* reset retry counter  */
 					Servo_sweep_step();																													/* Execute next serwo step */
 				}
+					
+				/* If Servo is in manual mode and Sonar is set to CONTINUOUS work, just call user handler */	
+				else if ( ServoMode == MANUAL && SonarMode == CONTINUOUS ) {
+					if (retry_counter == 0) {
+						SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */
+					} else if (retry_counter >= SONAR_MAXTRY) {
+						retry_counter = 0;
+						SonarDistHandler(0, ServoPosition); 																			/* Execute user results handler */	
+					}
+					TPM1->CONTROLS[1].CnV = 15u;																									/* Enable trigger */
+				} 
+
+				/* If Sonar is set to SINGLE work mode and we collect enought samples return value
+					 and disable sonar */
+			  else if (SonarMode == SINGLE  && AvgPointer == 0 ) {
+					if (retry_counter == 0) {
+						ReturnSingleMeas(result);
+					}	else if (retry_counter >= SONAR_MAXTRY){
+						retry_counter = 0;
+						ReturnSingleMeas(0);
+					}
+				} 
+				
+				/* Wait for more samples */
+				else {
+					TPM1->CONTROLS[1].CnV = 15u;																						/* Enable trigger */
+				}
 		}
-		TPM1->CONTROLS[1].CnV = 15u;																	 									 /* Enable trigger */
 		
-		/* If Servo mode is set to SWEEP, reset counter right after detecting falling edge.
-			 This will force next trigger as soon as sonar is ready to recive another echo.
+		/* If Servo mode is set to SWEEP or Sonar to SINGLE, reset counter right after detecting falling edge.
+       This will force next trigger as soon as sonar is ready to recieve another echo.
 			 It is possible to use it also in MANUAL mode, but if something is nearby sonar,
-			 it will produe A LOT of samples. In SWEEP mode this is not an issude due to the
+			 it will produce A LOT of samples. In SWEEP mode this is not an issude due to the
 			 fact that sonar if offline when servo is changing position. */
-		if (ServoMode == SWEEP){
+		if (ServoMode == SWEEP || SonarMode == SINGLE){
 			TPM1->CNT = 0;
 		}
 	}
@@ -211,14 +256,13 @@ void SonarChangeMode(SonarWorkModes NewMode){
 	}
 }
 
-
-
 /**
 	@brief Disable all sonar operations and interupts.
 */
 void DisableSonar(void){
 	TPM1->CONTROLS[1].CnV = 0u;																	  /* Disable trigger */
 	TPM1->CONTROLS[0].CnSC &= ~TPM_CnSC_CHIE_MASK;								/* Disable Sonar interupts */
+	TPM1->CNT = 0;																							  /* Reset counter */
 };
 
 /**
@@ -236,9 +280,17 @@ void EnableSonar(void){
 	@brief Initialize a single sonar measurment
 	This function can be used to trigger a single measurment. 
 	Interupt will trigger ::SonarDistHandler.
+	@param 
 	@warning This function uses busy-waiting to check servo and sonar readiness
 */
-void SonarStartMeas(void){
+void SonarStartMeas(int32_t angle){
+	Servo_move_by_degree(angle);		/* Set servo to desired position */
+	SingleResult = 0;								/* Set SingleResult to 0 to indicate how 
+																		 result should be returned. 0 = Interupt. */
+	if (SonarMode != SINGLE) {
+		SonarChangeMode(SINGLE);				/* Change sonar mode and enable if not set to single already*/
+	}
+	EnableSonar();
 }; 
 
 
@@ -248,8 +300,18 @@ void SonarStartMeas(void){
 	@warning This function uses busy-waiting to check servo and sonar readiness
 	@return Measured distance in cm
 */
-uint16_t SonarGetDistance(void){
-return 0;	
+uint16_t SonarGetDistance(int32_t angle){
+	Servo_move_by_degree(angle);		/* Set servo to desired position */
+	SingleResult = -1;								/* Set SingleResult to 0 to indicate how 
+																		   result should be returned. 1 = write result to SingleResult. */
+	if (SonarMode != SINGLE) {
+		SonarChangeMode(SINGLE);				/* Change sonar mode and enable if not set to single already*/
+	}
+	
+	EnableSonar();
+	
+	while(SingleResult == -1){};		/* busy-wait for result */
+	return SingleResult;
 }; 
 
 /** 

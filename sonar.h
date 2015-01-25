@@ -23,7 +23,7 @@
  It is useful when we want to limit background noise picked up by a sonar.
  @todo Function not implemented yet
 */
-#define SONAR_MAX_RANGE_CM 200
+#define SONAR_MAX_RANGE_CM 50
 
 
 /**
@@ -58,10 +58,11 @@ extern SonarWorkModes SonarMode;
 /* Functions */
 void Sonar_init(SonarWorkModes InitialWorkMode);
 void SonarDistHandler(uint16_t distance, int32_t angle); 
-void SonarStartMeas(void); 
+
 void EnableSonar(void);
 void DisableSonar(void);
 void SonarChangeMode(SonarWorkModes NewMode);
-uint16_t SonarGetDistance(void);
+void SonarStartMeas(int32_t angle); 
+uint16_t SonarGetDistance(int32_t angle);
 
 #endif 

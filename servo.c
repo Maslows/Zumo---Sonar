@@ -52,7 +52,7 @@ void Servo_init(ServoMode_t InitialWorkMode){
 	TPM2->CONTROLS[0].CnV = 1500*3; 																	/* Center servo. 1.5ms */
 	
 	/* Set servo mode */
-	ServoMode = InitialWorkMode;
+	ServoChangeMode(InitialWorkMode);
 	
 	/* Initialize PIT for servo movement time tracking. Disable it at init. */
 	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;																	/* Enable PIT Clock Gating */
@@ -86,7 +86,7 @@ void Servo_sweep_step(){
 }
 
 /**
-	@brief This function allows save changing of servo work mode.
+	@brief This function allows safe changing of servo work mode.
 	This function prevents some rare cases of deadlock due to timing 
 	issues that might arise when Servo is changing mode.
 */
@@ -95,7 +95,7 @@ void ServoChangeMode(ServoMode_t NewMode){
 	if(NewMode != ServoMode) {
 		if (NewMode == SWEEP){
 			ServoMode = SWEEP;
-			EnableSonar();
+			SonarChangeMode(CONTINUOUS);							/* Sonar Must be in CONTINUOUS for servo to work in SWEEP mode */
 		} else if (NewMode == MANUAL){
 			ServoMode = MANUAL;
 			EnableSonar();
@@ -113,34 +113,37 @@ void ServoChangeMode(ServoMode_t NewMode){
   @param degree Desired new position, calculated from servo's normal.
 */
 void Servo_move_by_degree(int32_t degree){
-	uint32_t NewPosition,AngularDistance,TravelTime_ms;
 	
-	DisableSonar();
-	
-	/* First check if wanted degree is out of servo range. 
-		 If yes, set servo to maximum possible possition in wanted direction */
-	if (degree > SERVO_MOVEMENT_RANGE ){
-		degree = SERVO_MOVEMENT_RANGE;
-	} else if ( degree < -SERVO_MOVEMENT_RANGE ) {
-		degree = -SERVO_MOVEMENT_RANGE;
-	}  
-	/* Recalculate degrees to us and set servo 
-		 For now assume that servo is linear */
-	NewPosition = (((degree+SERVO_MOVEMENT_RANGE))*(SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN))/(2*SERVO_MOVEMENT_RANGE);
-	NewPosition += SERVO_MOVEMENT_MIN;
-	TPM2->CONTROLS[0].CnV = NewPosition;
-			
-	/* Calculate servo movement distance and time */
-	AngularDistance = sqrt((degree-ServoPosition)*(degree-ServoPosition));
-	TravelTime_ms = AngularDistance*1000/SERVO_ANGULAR_VELOCITY;
-	
-	/* Change Servo State to moving and update its oposition */
-	ServoState = MOVING;
-	ServoPosition = degree;
-	
-	/* Set PIT_CH2 to Travel Time and start countdown */
-	PIT->CHANNEL[1].LDVAL = TravelTime_ms*24E3;  			/* Clock runs at 24MHz */
-	PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TEN_MASK;      /* Enable timer */		
+	if (ServoPosition != degree) {
+		uint32_t NewPosition,AngularDistance,TravelTime_ms;
+		
+		DisableSonar();
+		
+		/* First check if wanted degree is out of servo range. 
+			 If yes, set servo to maximum possible possition in wanted direction */
+		if (degree > SERVO_MOVEMENT_RANGE ){
+			degree = SERVO_MOVEMENT_RANGE;
+		} else if ( degree < -SERVO_MOVEMENT_RANGE ) {
+			degree = -SERVO_MOVEMENT_RANGE;
+		}  
+		/* Recalculate degrees to us and set servo 
+			 For now assume that servo is linear */
+		NewPosition = (((degree+SERVO_MOVEMENT_RANGE))*(SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN))/(2*SERVO_MOVEMENT_RANGE);
+		NewPosition += SERVO_MOVEMENT_MIN;
+		TPM2->CONTROLS[0].CnV = NewPosition;
+				
+		/* Calculate servo movement distance and time */
+		AngularDistance = sqrt((degree-ServoPosition)*(degree-ServoPosition));
+		TravelTime_ms = AngularDistance*1000/SERVO_ANGULAR_VELOCITY;
+		
+		/* Change Servo State to moving and update its oposition */
+		ServoState = MOVING;
+		ServoPosition = degree;
+		
+		/* Set PIT_CH2 to Travel Time and start countdown */
+		PIT->CHANNEL[1].LDVAL = TravelTime_ms*24E3;  			/* Clock runs at 24MHz */
+		PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TEN_MASK;      /* Enable timer */		
+  }
 };
 
 /**
@@ -156,7 +159,7 @@ void PIT_IRQHandler(void){
 		PIT->CHANNEL[1].TCTRL &= ~PIT_TCTRL_TEN_MASK;      						/* Disable timer */
 		PIT->CHANNEL[1].TFLG  |= PIT_TFLG_TIF_MASK; 									/* Clear Interupt Flag */
 		
-		EnableSonar();
+		EnableSonar();																								/* Enable Sonar */
 	}
 }
 
