@@ -1,4 +1,5 @@
 #include "servo.h"
+#include "sonar.h"
 #include <math.h>
 
 /**
@@ -85,6 +86,24 @@ void Servo_sweep_step(){
 }
 
 /**
+	@brief This function allows save changing of servo work mode.
+	This function prevents some rare cases of deadlock due to timing 
+	issues that might arise when Servo is changing mode.
+*/
+void ServoChangeMode(ServoMode_t NewMode){
+	/* Make sure new mode is not the same as the current one */
+	if(NewMode != ServoMode) {
+		if (NewMode == SWEEP){
+			ServoMode = SWEEP;
+			EnableSonar();
+		} else if (NewMode == MANUAL){
+			ServoMode = MANUAL;
+			EnableSonar();
+		}
+	}
+}
+
+/**
 	@brief Move servo to a given position in degrees
 	This function allows movment of servo in a direction specified by an angle.
   It will try to predict requied time needed by servo to finish rotation and set 
@@ -95,30 +114,49 @@ void Servo_sweep_step(){
 */
 void Servo_move_by_degree(int32_t degree){
 	uint32_t NewPosition,AngularDistance,TravelTime_ms;
+	
+	DisableSonar();
+	
 	/* First check if wanted degree is out of servo range. 
 		 If yes, set servo to maximum possible possition in wanted direction */
-	if (degree >= SERVO_MOVEMENT_RANGE ){
-		TPM2->CONTROLS[0].CnV = SERVO_MOVEMENT_MAX;
-	} else if ( degree <= -SERVO_MOVEMENT_RANGE ) {
-		TPM2->CONTROLS[0].CnV = SERVO_MOVEMENT_MIN;
-	} else { 
-		/* Recalculate degrees to us and set servo 
-			 For now assume that servo is linear */
-		NewPosition = (((degree+SERVO_MOVEMENT_RANGE))*(SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN))/(2*SERVO_MOVEMENT_RANGE);
-		NewPosition += SERVO_MOVEMENT_MIN;
-		TPM2->CONTROLS[0].CnV = NewPosition;
-				
-		/* Calculate servo movement distance and time */
-		AngularDistance = sqrt((degree-ServoPosition)*(degree-ServoPosition));
-		TravelTime_ms = AngularDistance*1000/SERVO_ANGULAR_VELOCITY;
-		
-		/* Change Servo State to moving and update its oposition */
-		ServoState = MOVING;
-		ServoPosition = degree;
-		
-		/* Set PIT_CH2 to Travel Time and start countdown */
-		PIT->CHANNEL[1].LDVAL = TravelTime_ms*24E3;  			/* Clock runs at 24MHz */
-		PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TEN_MASK;      /* Enable timer */
-	}		
+	if (degree > SERVO_MOVEMENT_RANGE ){
+		degree = SERVO_MOVEMENT_RANGE;
+	} else if ( degree < -SERVO_MOVEMENT_RANGE ) {
+		degree = -SERVO_MOVEMENT_RANGE;
+	}  
+	/* Recalculate degrees to us and set servo 
+		 For now assume that servo is linear */
+	NewPosition = (((degree+SERVO_MOVEMENT_RANGE))*(SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN))/(2*SERVO_MOVEMENT_RANGE);
+	NewPosition += SERVO_MOVEMENT_MIN;
+	TPM2->CONTROLS[0].CnV = NewPosition;
+			
+	/* Calculate servo movement distance and time */
+	AngularDistance = sqrt((degree-ServoPosition)*(degree-ServoPosition));
+	TravelTime_ms = AngularDistance*1000/SERVO_ANGULAR_VELOCITY;
+	
+	/* Change Servo State to moving and update its oposition */
+	ServoState = MOVING;
+	ServoPosition = degree;
+	
+	/* Set PIT_CH2 to Travel Time and start countdown */
+	PIT->CHANNEL[1].LDVAL = TravelTime_ms*24E3;  			/* Clock runs at 24MHz */
+	PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TEN_MASK;      /* Enable timer */		
 };
+
+/**
+ @brief PIT ISR 
+ This function handles PIT interupts
+ - Channel 2: Used to keep track of servo movement time.
+*/
+void PIT_IRQHandler(void){
+	if (PIT->CHANNEL[1].TFLG & PIT_TFLG_TIF_MASK) {
+		/* CH2 ISR */
+		/* Servo reached its destination. Stop countdown and enable trigger*/
+		ServoState = IDLE;																						/* Set servo state to idle */
+		PIT->CHANNEL[1].TCTRL &= ~PIT_TCTRL_TEN_MASK;      						/* Disable timer */
+		PIT->CHANNEL[1].TFLG  |= PIT_TFLG_TIF_MASK; 									/* Clear Interupt Flag */
+		
+		EnableSonar();
+	}
+}
 

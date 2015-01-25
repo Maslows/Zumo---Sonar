@@ -34,30 +34,6 @@ void UART2_IRQHandler(void){
 	if(UART(UART_MODULE)->S1 & UART_S1_RDRF_MASK){
 		
 		char c = UART(UART_MODULE)->D;
-			/*
-			if ( c == 'w' ) {
-				driveForward(speed);
-			}
-			else if ( c == 's' ) {
-				driveReverse(speed);
-			}
-			else if ( c == ' ') {
-				stop();
-			} 
-			else if ( c == 'a') {
-				driveReverseLeftTrack(40); 
-				driveForwardRightTrack(40);
-			}
-			else if ( c == 'd') {
-				driveForwardLeftTrack(40); 
-				driveReverseRightTrack(40);
-			} else if ( c == 'q' ) {
-				if (speed>0) speed-=10;
-			}
-			else if ( c == 'e' ) {
-				if (speed<100) speed+=10;
-			}
-			*/
 
 #if OVERWRITE==1	
 		if( c == '\0' || c == '\r' || c == '$'){

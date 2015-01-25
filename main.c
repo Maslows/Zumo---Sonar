@@ -13,7 +13,6 @@ char tab[BUFF_SIZE];
 int main(void) {
 	
 	
-	sLCD_init();
 	bt_init(BAUD_RATE);
 	Sonar_init(CONTINUOUS);
 	Servo_init(MANUAL);
@@ -43,10 +42,10 @@ int main(void) {
 				driveReverseRightTrack(40);
 			}
 			else if ( strcmp(tab, "ServoOn") == 0) {
-				ServoMode = SWEEP;
+				ServoChangeMode(SWEEP);
 			}
 			else if ( strcmp(tab, "ServoCenter") == 0) {
-				ServoMode = MANUAL;
+				ServoChangeMode(MANUAL);
 				Servo_move_by_degree(0);
 			}
 			else if ( strcmp(tab, "SonarStartMeas") == 0) {

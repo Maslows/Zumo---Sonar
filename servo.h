@@ -74,5 +74,6 @@ extern int32_t ServoPosition;
 void Servo_init(ServoMode_t InitialWorkMode);
 void Servo_move_by_degree(int32_t degree);
 void Servo_sweep_step(void);
+void ServoChangeMode(ServoMode_t NewMode);
 
 #endif
