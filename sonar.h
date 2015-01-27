@@ -24,7 +24,7 @@
  All measurments which return value greather than this, will be changed into 0.
  It is useful when we want to limit background noise picked up by a sonar.
 */
-#define SONAR_MAX_RANGE_CM 200
+#define SONAR_MAX_RANGE_CM 400
 
 
 /**
@@ -43,7 +43,7 @@
 				For example is set to 3 and 2 measurements fails and then next one is successful, 
 				counter will be set back to 0.
 */
-#define SONAR_MAXTRY 3
+#define SONAR_MAXTRY 2
 
 
 /**

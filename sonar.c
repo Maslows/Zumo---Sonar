@@ -127,7 +127,7 @@ void ReturnSingleMeas(uint16_t result){
 /**
 	@brief Helper function which calculates average of all samples in ::AvgBuffer.
 */
-uint16_t CalculateAverage(){
+uint16_t CalculateResult(){
 	uint16_t result = 0;
 	uint8_t  i = 0;																														
 	
@@ -135,7 +135,13 @@ uint16_t CalculateAverage(){
 		result += AvgBuffer[i];
 	}
 	
-	return result/(double)SONAR_AVG_NUMBER;
+	result /= (double)SONAR_AVG_NUMBER;
+	
+	if (result > SONAR_MAX_RANGE_CM){
+		result = 0;
+	}
+	
+	return result;
 };
 
 /**
@@ -163,68 +169,48 @@ void TPM1_IRQHandler(void) {
 				retry_counter++;																					  /* Increment overflow counter */ 
 				TPM1->CONTROLS[1].CnV = 15u;																/* Enable trigger */
 				/* If we reach retry limit, proceed with next sweep step */
-				if (ServoMode == SWEEP && retry_counter > SONAR_MAXTRY) {
+				if (ServoMode == SWEEP && retry_counter >= SONAR_MAXTRY) {
 					retry_counter = 0;																														/* reset retry counter */
 					Servo_sweep_step();																														/* Execute next serwo step */
+				} else if ( SonarMode == SINGLE && retry_counter >= SONAR_MAXTRY){
+					retry_counter = 0;
+					ReturnSingleMeas(0);
 				}
-				
+					
 				/* Successful measurment */
 			}	else { 	
+				/* Add result to buffer */
 				uint16_t result = TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM;	                    /* Get result */
+				AvgBuffer[AvgPointer] = result;
+				AvgPointer = (AvgPointer + 1) % SONAR_AVG_NUMBER;
+				retry_counter = 0;
+				success++;
 				
-				/* Check if result is smaller than defined max range */
-				if (result < SONAR_MAX_RANGE_CM) {
-					/* Add result to buffer */
-					retry_counter = 0;
-					AvgBuffer[AvgPointer] = result;
-					AvgPointer = (AvgPointer + 1) % SONAR_AVG_NUMBER;
-					success++;
-				} else {
-					/* If obtained sample is out of range, increment timeout counter */ 
-					retry_counter++;
-					TPM1->CONTROLS[1].CnV = 15u;																									/* Enable trigger */
-				}
-				
-				/* Depending on the settings, decide what to do next with obtained result */
-				
-				/* If Servo is in SWEEP mode and we collect SONAR_AVG_NUMBER samples
-					 call user handler and procceed with the sweep */
-				if (ServoMode == SWEEP && AvgPointer == 0 && retry_counter == 0) {						 	/* Execute next servo step if enabled */
-					result = CalculateAverage();																									/* Calculate average of all collected samples */
-					SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */	
-					Servo_sweep_step();
-					
-				/* If measurment is successful but result is out of range	SONAR_MAXTRY times
-					 proceed with sweep */
-			  } else if (ServoMode == SWEEP && retry_counter > SONAR_MAXTRY ) {
-					retry_counter = 0;																													/* reset retry counter  */
-					Servo_sweep_step();																													/* Execute next serwo step */
-					
-				/* If Servo is in manual mode and Sonar is set to CONTINUOUS work, just call user handler */	
-				} else if ( ServoMode == MANUAL && SonarMode == CONTINUOUS ) {
-					if (retry_counter == 0) {
-						result = CalculateAverage();																									/* Calculate average of all collected samples */
-						SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */
-					} else if (retry_counter >= SONAR_MAXTRY) {
-						retry_counter = 0;
-						SonarDistHandler(0, ServoPosition); 																			/* Execute user results handler */	
+				/* Check if we collected entire buffer of new samples */
+				if (AvgPointer == 0) {
+					/* Depending on the settings, decide what to do next with obtained result */
+					/* If Servo is in SWEEP mode and we collect SONAR_AVG_NUMBER samples
+						 call user handler and procceed with the sweep */
+					if (ServoMode == SWEEP ) {						 												/* Execute next servo step if enabled */
+							result = CalculateResult();																									/* Calculate average of all collected samples */
+							SonarDistHandler(result, ServoPosition); 																		/* Execute user results handler */	
+							Servo_sweep_step();
+			
+					/* If Servo is in manual mode and Sonar is set to CONTINUOUS work, just call user handler */	
+					} else if ( ServoMode == MANUAL && SonarMode == CONTINUOUS ) {				
+							result = CalculateResult();																									/* Calculate average of all collected samples */
+							SonarDistHandler(result, ServoPosition); 																		/* Execute user results handler */
+							TPM1->CONTROLS[1].CnV = 15u;																								/* Enable trigger */
+			
+					/* If Sonar is set to SINGLE work mode and we collect enought samples return value
+						 and disable sonar */
+					} else if (SonarMode == SINGLE) {
+							result = CalculateResult();																									/* Calculate average of all collected samples */
+							ReturnSingleMeas(result);
 					}
-					TPM1->CONTROLS[1].CnV = 15u;																									/* Enable trigger */
-		
-				/* If Sonar is set to SINGLE work mode and we collect enought samples return value
-					 and disable sonar */
-			  } else if (SonarMode == SINGLE && AvgPointer == 0 ) {
-					if (retry_counter == 0) {
-						result = CalculateAverage();																									/* Calculate average of all collected samples */
-						ReturnSingleMeas(result);
-					}	else if (retry_counter >= SONAR_MAXTRY){
-						retry_counter = 0;
-						ReturnSingleMeas(0);
-					}
-				 
 				/* Wait for more samples */
 				} else {
-					TPM1->CONTROLS[1].CnV = 15u;																						/* Enable trigger */
+						TPM1->CONTROLS[1].CnV = 15u;																						/* Enable trigger */
 				}
 		}
 		
