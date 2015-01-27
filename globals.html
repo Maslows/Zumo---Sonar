@@ -197,8 +197,8 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>c
 : <a class="el" href="bluetooth_8c.html#adc08ed1554f35803d229aeaf11216b3f">bluetooth.c</a>
 </li>
-<li>CalculateAverage()
-: <a class="el" href="sonar_8c.html#a12ced322c061cc88286cf0af57d9efda">sonar.c</a>
+<li>CalculateResult()
+: <a class="el" href="sonar_8c.html#a58ab62c4281bf06248f3ca5e06de6ff7">sonar.c</a>
 </li>
 <li>CONTINUOUS
 : <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">sonar.h</a>
@@ -302,6 +302,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>LIMIT
 : <a class="el" href="motor_driver_8c.html#ab65542908b98092f677f17541966d2ed">motorDriver.c</a>
 </li>
+<li>LOCKED
+: <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36aa6b4af979c9694e48f340397ac08dfd1c">servo.h</a>
+</li>
 </ul>
 
 
@@ -334,6 +337,9 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>ParseIntNumber()
+: <a class="el" href="main_8c.html#ac85f77e771382fd4e47032620d43891f">main.c</a>
+</li>
 <li>PIT_IRQHandler()
 : <a class="el" href="servo_8c.html#af5c5d1d639dbe9c05432f9b5f7da56f7">servo.c</a>
 </li>
@@ -362,19 +368,18 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
-<li>SERTO_TICKS_PER_US
-: <a class="el" href="servo_8h.html#a4b14068f69d1ffd22d9a4a4e534ba5bb">servo.h</a>
+<li>SCAN_AND_GO
+: <a class="el" href="servo_8h.html#a9b2b8b593017fd9289c835aebc4e643ba6c10fdfa1daee3c41144ae3c84215d1c">servo.h</a>
+</li>
+<li>SCAN_AND_LOCK
+: <a class="el" href="servo_8h.html#a9b2b8b593017fd9289c835aebc4e643ba6791b0cadbd0741a7a70eafee6ee192c">servo.h</a>
 </li>
 <li>SERVO_ANGULAR_VELOCITY
 : <a class="el" href="servo_8h.html#afd6b3d47b4cc3eabdd64e99a67bf96e7">servo.h</a>
 </li>
 <li>Servo_init()
-: <a class="el" href="servo_8h.html#afb8b2878cdf83e17a47a2bbfd84a13ed">servo.h</a>
-, <a class="el" href="servo_8c.html#afb8b2878cdf83e17a47a2bbfd84a13ed">servo.c</a>
-</li>
-<li>Servo_move_by_degree()
-: <a class="el" href="servo_8c.html#a1c9c9b937742da4f905cc55a74b79ecd">servo.c</a>
-, <a class="el" href="servo_8h.html#a1c9c9b937742da4f905cc55a74b79ecd">servo.h</a>
+: <a class="el" href="servo_8c.html#ab944078572fad93e2090509e3957005b">servo.c</a>
+, <a class="el" href="servo_8h.html#ab944078572fad93e2090509e3957005b">servo.h</a>
 </li>
 <li>SERVO_MOVEMENT_MAX
 : <a class="el" href="servo_8h.html#a9b74523ca884eb770565fa25553cfc8b">servo.h</a>
@@ -385,23 +390,40 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>SERVO_MOVEMENT_RANGE
 : <a class="el" href="servo_8h.html#a3d2e5b971afbd9bc1583edc510ce81a7">servo.h</a>
 </li>
-<li>Servo_sweep_step()
-: <a class="el" href="servo_8c.html#a4154fb6ed6bae21035ac02f2e8e36406">servo.c</a>
-, <a class="el" href="servo_8h.html#a4d8bfa97f25c591269cfd24388c25644">servo.h</a>
+<li>SERVO_STEP_DEG
+: <a class="el" href="servo_8h.html#a3a036039969fe1374ce619c5be838d61">servo.h</a>
 </li>
-<li>SERVO_SWEEP_STEP_DEG
-: <a class="el" href="servo_8h.html#a899400637795db7174931501b8b40516">servo.h</a>
+<li>SERVO_TICKS_PER_US
+: <a class="el" href="servo_8c.html#a43bd726e128da98b4838a68c0703ea97">servo.c</a>
+</li>
+<li>ServoChangeLockRange()
+: <a class="el" href="servo_8c.html#addddfc1dc1dee155e313d00b0f660075">servo.c</a>
+, <a class="el" href="servo_8h.html#addddfc1dc1dee155e313d00b0f660075">servo.h</a>
 </li>
 <li>ServoChangeMode()
 : <a class="el" href="servo_8c.html#a1c1e027654d29aef3848af9f2e118688">servo.c</a>
 , <a class="el" href="servo_8h.html#a1c1e027654d29aef3848af9f2e118688">servo.h</a>
 </li>
+<li>ServoChangeSweepMode()
+: <a class="el" href="servo_8h.html#a1865a21f6683bb41e8a935c33caa3363">servo.h</a>
+, <a class="el" href="servo_8c.html#a1865a21f6683bb41e8a935c33caa3363">servo.c</a>
+</li>
+<li>ServoLockRange
+: <a class="el" href="servo_8c.html#aeaa7cfdb4429db0c616191749d831110">servo.c</a>
+</li>
 <li>ServoMode
-: <a class="el" href="servo_8h.html#a17abd21d85ada3e51b18432cf1c2b426">servo.h</a>
-, <a class="el" href="servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426">servo.c</a>
+: <a class="el" href="servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426">servo.c</a>
+, <a class="el" href="servo_8h.html#a17abd21d85ada3e51b18432cf1c2b426">servo.h</a>
 </li>
 <li>ServoMode_t
 : <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">servo.h</a>
+</li>
+<li>ServoMoveByDegree()
+: <a class="el" href="servo_8c.html#a0efffe5db4190a16376b48ab8ae0ac2c">servo.c</a>
+, <a class="el" href="servo_8h.html#a0efffe5db4190a16376b48ab8ae0ac2c">servo.h</a>
+</li>
+<li>ServoMoveByStep()
+: <a class="el" href="servo_8c.html#ac65ea300e52d8984cc97b33da2cd5367">servo.c</a>
 </li>
 <li>ServoPosition
 : <a class="el" href="servo_8c.html#a6ca30760f53d2a937b251cfb0e76a6e0">servo.c</a>
@@ -413,6 +435,16 @@ $(document).ready(function(){initNavTree('globals.html','');});
 </li>
 <li>ServoState_t
 : <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36a">servo.h</a>
+</li>
+<li>ServoSweep_t
+: <a class="el" href="servo_8h.html#a9b2b8b593017fd9289c835aebc4e643b">servo.h</a>
+</li>
+<li>ServoSweepMode
+: <a class="el" href="servo_8c.html#a1cc6cbb5101dee2b682f5e3b4ce39814">servo.c</a>
+</li>
+<li>ServoSweepStep()
+: <a class="el" href="servo_8h.html#a1285fbc29db2d21ff556d90bb80a557c">servo.h</a>
+, <a class="el" href="servo_8c.html#a1285fbc29db2d21ff556d90bb80a557c">servo.c</a>
 </li>
 <li>SINGLE
 : <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">sonar.h</a>
@@ -451,8 +483,8 @@ $(document).ready(function(){initNavTree('globals.html','');});
 , <a class="el" href="sonar_8c.html#ae81e58eda1f172e0f29250cb6ac5ed7a">sonar.c</a>
 </li>
 <li>SonarGetDistance()
-: <a class="el" href="sonar_8c.html#acbfc04f4efdc8692cf46217b1331bfd4">sonar.c</a>
-, <a class="el" href="sonar_8h.html#acbfc04f4efdc8692cf46217b1331bfd4">sonar.h</a>
+: <a class="el" href="sonar_8h.html#acbfc04f4efdc8692cf46217b1331bfd4">sonar.h</a>
+, <a class="el" href="sonar_8c.html#acbfc04f4efdc8692cf46217b1331bfd4">sonar.c</a>
 </li>
 <li>SonarMode
 : <a class="el" href="sonar_8h.html#ad2046f041ee5ecb52f1efd187ae0e9db">sonar.h</a>
@@ -466,12 +498,12 @@ $(document).ready(function(){initNavTree('globals.html','');});
 , <a class="el" href="sonar_8c.html#af0c249436f7ef0657389cc40941da5cf">sonar.c</a>
 </li>
 <li>speed
-: <a class="el" href="motor_driver_8h.html#aae32029df16a54aa86c0aec2df9f7bb7">motorDriver.h</a>
-, <a class="el" href="motor_driver_8c.html#aae32029df16a54aa86c0aec2df9f7bb7">motorDriver.c</a>
+: <a class="el" href="motor_driver_8c.html#aae32029df16a54aa86c0aec2df9f7bb7">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#aae32029df16a54aa86c0aec2df9f7bb7">motorDriver.h</a>
 </li>
 <li>stop()
-: <a class="el" href="motor_driver_8c.html#aacf6bf8e121fea8b0a92d7197b73fe27">motorDriver.c</a>
-, <a class="el" href="motor_driver_8h.html#aacf6bf8e121fea8b0a92d7197b73fe27">motorDriver.h</a>
+: <a class="el" href="motor_driver_8h.html#aacf6bf8e121fea8b0a92d7197b73fe27">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#aacf6bf8e121fea8b0a92d7197b73fe27">motorDriver.c</a>
 </li>
 <li>string_count
 : <a class="el" href="bluetooth_8h.html#ae0b07eb3386d833f10670a32c37926e8">bluetooth.h</a>
@@ -555,7 +587,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jan 27 2015 01:24:42 for Zumo - Sonar lib by
+    <li class="footer">Generated on Tue Jan 27 2015 14:22:29 for Zumo - Sonar lib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

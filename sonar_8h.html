@@ -122,13 +122,13 @@ Macros</h2></td></tr>
 <tr class="memitem:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0">SONAR_MEAS_INTERVAL_MS</a>&#160;&#160;&#160;35</td></tr>
 <tr class="memdesc:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define sonar measurment interval. Triggers are send every <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0" title="Define sonar measurment interval. Triggers are send every SONAR_MEAS_INTERVAL_MS by TPM1...">SONAR_MEAS_INTERVAL_MS</a> by TPM1. Setting lower value will increese measurement speed but it will also make sonar more prone to residiual echo from previous measurements.  <a href="#ae5e988fb642c42b7fdb79aa5e0be30a0">More...</a><br /></td></tr>
 <tr class="separator:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accc26a2e71d62cabac5599480b217444"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#accc26a2e71d62cabac5599480b217444">SONAR_MAX_RANGE_CM</a>&#160;&#160;&#160;200</td></tr>
+<tr class="memitem:accc26a2e71d62cabac5599480b217444"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#accc26a2e71d62cabac5599480b217444">SONAR_MAX_RANGE_CM</a>&#160;&#160;&#160;400</td></tr>
 <tr class="memdesc:accc26a2e71d62cabac5599480b217444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines maximum wanted range of a sonar All measurments which return value greather than this, will be changed into 0. It is useful when we want to limit background noise picked up by a sonar.  <a href="#accc26a2e71d62cabac5599480b217444">More...</a><br /></td></tr>
 <tr class="separator:accc26a2e71d62cabac5599480b217444"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a654a02dec6f794c16f31690b6ef7ec7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b">SONAR_AVG_NUMBER</a>&#160;&#160;&#160;3</td></tr>
 <tr class="memdesc:a654a02dec6f794c16f31690b6ef7ec7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define number of measurment to average. When set to 1, measurments are not avergaged. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode it is a good idea to slightly bigger number (3-10). Next measurement is done as soon as the previous one is done so the increese in delay is not big.  <a href="#a654a02dec6f794c16f31690b6ef7ec7b">More...</a><br /></td></tr>
 <tr class="separator:a654a02dec6f794c16f31690b6ef7ec7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63">SONAR_MAXTRY</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memitem:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63">SONAR_MAXTRY</a>&#160;&#160;&#160;2</td></tr>
 <tr class="memdesc:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define maximum number of measurment retries. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a> mode when sonar fails to obtain usable data after <a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63" title="Define maximum number of measurment retries. In SINGLE mode when sonar fails to obtain usable data af...">SONAR_MAXTRY</a> it will return 0. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> it will return 0 and retry again. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode it will proceed with the next step.  <a href="#a3a2f4484d83d3d7f548c6fe56e85fb63">More...</a><br /></td></tr>
 <tr class="separator:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -204,7 +204,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SONAR_MAX_RANGE_CM&#160;&#160;&#160;200</td>
+          <td class="memname">#define SONAR_MAX_RANGE_CM&#160;&#160;&#160;400</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -218,7 +218,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SONAR_MAXTRY&#160;&#160;&#160;3</td>
+          <td class="memname">#define SONAR_MAXTRY&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -455,7 +455,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_dfc317270c89deb8038687819d9c4f9f.html">sonar</a></li><li class="navelem"><a class="el" href="sonar_8h.html">sonar.h</a></li>
-    <li class="footer">Generated on Tue Jan 27 2015 01:24:42 for Zumo - Sonar lib by
+    <li class="footer">Generated on Tue Jan 27 2015 14:22:29 for Zumo - Sonar lib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

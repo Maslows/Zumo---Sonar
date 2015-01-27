@@ -1,8 +1,10 @@
 var searchData=
 [
+  ['servolockrange',['ServoLockRange',['../servo_8c.html#aeaa7cfdb4429db0c616191749d831110',1,'servo.c']]],
   ['servomode',['ServoMode',['../servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426',1,'ServoMode():&#160;servo.c'],['../servo_8h.html#a17abd21d85ada3e51b18432cf1c2b426',1,'ServoMode():&#160;servo.c']]],
   ['servoposition',['ServoPosition',['../servo_8c.html#a6ca30760f53d2a937b251cfb0e76a6e0',1,'ServoPosition():&#160;servo.c'],['../servo_8h.html#a6ca30760f53d2a937b251cfb0e76a6e0',1,'ServoPosition():&#160;servo.c']]],
   ['servostate',['ServoState',['../servo_8c.html#aace1737de9594d03f5e07f8eb75a6c7a',1,'ServoState():&#160;servo.c'],['../servo_8h.html#aace1737de9594d03f5e07f8eb75a6c7a',1,'ServoState():&#160;servo.c']]],
+  ['servosweepmode',['ServoSweepMode',['../servo_8c.html#a1cc6cbb5101dee2b682f5e3b4ce39814',1,'servo.c']]],
   ['singleresult',['SingleResult',['../sonar_8c.html#a2cd4654d994cc98ddc5b4ceffa4d2c98',1,'sonar.c']]],
   ['size',['size',['../struct_u_a_r_t___b_u_f__t.html#aaba88b24a21a6c70c895c0d55f4a69a0',1,'UART_BUF_t']]],
   ['sonarmode',['SonarMode',['../sonar_8c.html#ad2046f041ee5ecb52f1efd187ae0e9db',1,'SonarMode():&#160;sonar.c'],['../sonar_8h.html#ad2046f041ee5ecb52f1efd187ae0e9db',1,'SonarMode():&#160;sonar.c']]],

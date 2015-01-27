@@ -2,7 +2,7 @@ var sonar_8c =
 [
     [ "ECHO_MASK", "sonar_8c.html#a46d9d17a962653141eaacd462625e243", null ],
     [ "SONAR_TICKS_PER_CM", "sonar_8c.html#a3c0fce219d1f99a3f387fa0845bee71f", null ],
-    [ "CalculateAverage", "sonar_8c.html#a12ced322c061cc88286cf0af57d9efda", null ],
+    [ "CalculateResult", "sonar_8c.html#a58ab62c4281bf06248f3ca5e06de6ff7", null ],
     [ "DisableSonar", "sonar_8c.html#aa706918bd1dfaebfc3016b456fd360b0", null ],
     [ "EnableSonar", "sonar_8c.html#a66a59332cbb94838b8423b1437b28782", null ],
     [ "ReturnSingleMeas", "sonar_8c.html#aa4e65e4f3583822971be016eed5cb96e", null ],
