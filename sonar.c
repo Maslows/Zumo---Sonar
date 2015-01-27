@@ -330,6 +330,7 @@ uint16_t SonarGetDistance(int32_t angle){
 	@param distance_cm Measured distance in cm. 
 				 If measurment failed or was out of range
 				 function will be called with parameter 0.
+	@param angle  Contains the angle at which the measurement was done
 */
 void SonarDistHandler(uint16_t distance_cm, int32_t angle){	
 	/* Your code here */

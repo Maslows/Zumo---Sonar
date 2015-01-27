@@ -37,7 +37,7 @@
 /**
 	@brief Define maximum number of measurment retries.
 	In #SINGLE mode when sonar fails to obtain usable data after #SONAR_MAXTRY it will return 0.
-	In #CONTINOUS it will return 0 and retry again.
+	In #CONTINUOUS it will return 0 and retry again.
 	In #SWEEP mode it will proceed with the next step
 	@note This is a number of failed measurements IN ROW after which sonar gives up. 
 				For example is set to 3 and 2 measurements fails and then next one is successful, 
