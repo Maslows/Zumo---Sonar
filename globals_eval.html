@@ -45,6 +45,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -100,7 +101,7 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,7 +113,7 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 <div class="contents">
 &#160;<ul>
 <li>CONTINUOUS
-: <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a9191b0f571007d73a6fc0f6a39d2b866">sonar.h</a>
+: <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">sonar.h</a>
 </li>
 <li>IDLE
 : <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36aafd6a0e4343048b10646dd2976cc5ad18">servo.h</a>
@@ -126,29 +127,11 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 <li>MOVING
 : <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36aa16ebdcb23eb5337fd5bc598fa8d6035d">servo.h</a>
 </li>
-<li>OFF
-: <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caac132f2982b98bcaa3445e535a03ff75">servo.h</a>
-</li>
 <li>RIGHT
 : <a class="el" href="servo_8c.html#a06fc87d81c62e9abb8790b6e5713c55baec8379af7490bb9eaaf579cf17876f38">servo.c</a>
 </li>
 <li>SINGLE
-: <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a3388f7110f6f25a54e215eb75d5d7516">sonar.h</a>
-</li>
-<li>SONAR_CAPTURE_END
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a4d3cab2f3e524a90ca10ca11d231a9cd">sonar.h</a>
-</li>
-<li>SONAR_CAPTURE_OVERFLOW
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281aee5ba9bab305ea8048e7d1849c9863ff">sonar.h</a>
-</li>
-<li>SONAR_CAPTURE_START
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a12f81920c5198203868e8b5d5db7c9f5">sonar.h</a>
-</li>
-<li>SONAR_IDLE
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a07e3cb491c24cc1bbb160a962a4cfc59">sonar.h</a>
-</li>
-<li>SONAR_TRIGGER_SENT
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a366fc733846a7631747e8c599e208341">sonar.h</a>
+: <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">sonar.h</a>
 </li>
 <li>SWEEP
 : <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">servo.h</a>
@@ -159,7 +142,7 @@ $(document).ready(function(){initNavTree('globals_eval.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Dec 22 2014 02:06:41 for Zumo - Sonar lib by
+    <li class="footer">Generated on Tue Jan 27 2015 01:24:42 for Zumo - Sonar lib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

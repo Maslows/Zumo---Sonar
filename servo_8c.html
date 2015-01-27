@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>Zumo - Sonar lib: C:/Users/Kamil/Dropbox/EIT/3_Rok/Microprocessor Technology 2/ZUMO/sonar/servo.c File Reference</title>
+<title>Zumo - Sonar lib: servo.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,6 +45,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,7 +91,7 @@ $(document).ready(function(){initNavTree('servo_8c.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,6 +110,7 @@ $(document).ready(function(){initNavTree('servo_8c.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="servo_8h_source.html">servo.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sonar_8h_source.html">sonar.h</a>&quot;</code><br />
 <code>#include &lt;math.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -127,23 +129,29 @@ Functions</h2></td></tr>
 <tr class="memitem:a4154fb6ed6bae21035ac02f2e8e36406"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a4154fb6ed6bae21035ac02f2e8e36406">Servo_sweep_step</a> ()</td></tr>
 <tr class="memdesc:a4154fb6ed6bae21035ac02f2e8e36406"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a sweep step Each time this function is called, servo will move by <a class="el" href="servo_8h.html#a899400637795db7174931501b8b40516" title="Define sweep step in degrees This marco defines a sweep step. Every step servo will rotate by this va...">SERVO_SWEEP_STEP_DEG</a> in <a class="el" href="servo_8c.html#a1cfd6ee72ce562cd5fab329d6add4ad8" title="Define servo movement direction in sweep mode. ">sweep_direction</a>. If it reaches <a class="el" href="servo_8h.html#a9b74523ca884eb770565fa25553cfc8b" title="Define maximum PWM lenght which servo can tolerate This macro defines the maximal PWM which can be us...">SERVO_MOVEMENT_MAX</a> it will change the direction of the sweep.  <a href="#a4154fb6ed6bae21035ac02f2e8e36406">More...</a><br /></td></tr>
 <tr class="separator:a4154fb6ed6bae21035ac02f2e8e36406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1e027654d29aef3848af9f2e118688"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a1c1e027654d29aef3848af9f2e118688">ServoChangeMode</a> (<a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">ServoMode_t</a> NewMode)</td></tr>
+<tr class="memdesc:a1c1e027654d29aef3848af9f2e118688"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function allows safe changing of servo work mode. This function prevents some rare cases of deadlock due to timing issues that might arise when Servo is changing mode.  <a href="#a1c1e027654d29aef3848af9f2e118688">More...</a><br /></td></tr>
+<tr class="separator:a1c1e027654d29aef3848af9f2e118688"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c9c9b937742da4f905cc55a74b79ecd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a1c9c9b937742da4f905cc55a74b79ecd">Servo_move_by_degree</a> (int32_t degree)</td></tr>
-<tr class="memdesc:a1c9c9b937742da4f905cc55a74b79ecd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move servo to a given position in degrees This function allows movment of servo in a direction specified by an angle. It will try to predict requied time needed by servo to finish rotation and set PIT_CH2 to countdown. It will also update <a class="el" href="servo_8c.html#aace1737de9594d03f5e07f8eb75a6c7a" title="Define Servo current state. ">ServoState</a> appropriately.  <a href="#a1c9c9b937742da4f905cc55a74b79ecd">More...</a><br /></td></tr>
+<tr class="memdesc:a1c9c9b937742da4f905cc55a74b79ecd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move servo to a given position in degrees This function allows movment of servo in a direction specified by an angle. It will try to predict requied time needed by servo to finish rotation and set PIT_CH2 to countdown. It will also update <a class="el" href="servo_8c.html#aace1737de9594d03f5e07f8eb75a6c7a" title="Variable containing Servo current state. ">ServoState</a> appropriately.  <a href="#a1c9c9b937742da4f905cc55a74b79ecd">More...</a><br /></td></tr>
 <tr class="separator:a1c9c9b937742da4f905cc55a74b79ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5c5d1d639dbe9c05432f9b5f7da56f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#af5c5d1d639dbe9c05432f9b5f7da56f7">PIT_IRQHandler</a> (void)</td></tr>
+<tr class="memdesc:af5c5d1d639dbe9c05432f9b5f7da56f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT ISR This function handles PIT interupts.  <a href="#af5c5d1d639dbe9c05432f9b5f7da56f7">More...</a><br /></td></tr>
+<tr class="separator:af5c5d1d639dbe9c05432f9b5f7da56f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a1cfd6ee72ce562cd5fab329d6add4ad8"><td class="memItemLeft" align="right" valign="top">enum  { ... } &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a1cfd6ee72ce562cd5fab329d6add4ad8">sweep_direction</a> = <a class="el" href="servo_8c.html#a06fc87d81c62e9abb8790b6e5713c55baec8379af7490bb9eaaf579cf17876f38">RIGHT</a></td></tr>
 <tr class="memdesc:a1cfd6ee72ce562cd5fab329d6add4ad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define servo movement direction in sweep mode.  <a href="#a1cfd6ee72ce562cd5fab329d6add4ad8">More...</a><br /></td></tr>
 <tr class="separator:a1cfd6ee72ce562cd5fab329d6add4ad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17abd21d85ada3e51b18432cf1c2b426"><td class="memItemLeft" align="right" valign="top"><a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">ServoMode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426">ServoMode</a> = <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caac132f2982b98bcaa3445e535a03ff75">OFF</a></td></tr>
-<tr class="memdesc:a17abd21d85ada3e51b18432cf1c2b426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Servo Work mode Turn off servo by default.  <a href="#a17abd21d85ada3e51b18432cf1c2b426">More...</a><br /></td></tr>
+<tr class="memitem:a17abd21d85ada3e51b18432cf1c2b426"><td class="memItemLeft" align="right" valign="top"><a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">ServoMode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426">ServoMode</a> = <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8ca506e8dd29460ea318b68d035f679b01b">MANUAL</a></td></tr>
+<tr class="memdesc:a17abd21d85ada3e51b18432cf1c2b426"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Servo Work mode Manual mode is default.  <a href="#a17abd21d85ada3e51b18432cf1c2b426">More...</a><br /></td></tr>
 <tr class="separator:a17abd21d85ada3e51b18432cf1c2b426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ca30760f53d2a937b251cfb0e76a6e0"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#a6ca30760f53d2a937b251cfb0e76a6e0">ServoPosition</a> = 0</td></tr>
 <tr class="memdesc:a6ca30760f53d2a937b251cfb0e76a6e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Servo Position in degrees. This variable contains predicted position of a servo.  <a href="#a6ca30760f53d2a937b251cfb0e76a6e0">More...</a><br /></td></tr>
 <tr class="separator:a6ca30760f53d2a937b251cfb0e76a6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aace1737de9594d03f5e07f8eb75a6c7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36a">ServoState_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="servo_8c.html#aace1737de9594d03f5e07f8eb75a6c7a">ServoState</a> = <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36aafd6a0e4343048b10646dd2976cc5ad18">IDLE</a></td></tr>
-<tr class="memdesc:aace1737de9594d03f5e07f8eb75a6c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Servo current state.  <a href="#aace1737de9594d03f5e07f8eb75a6c7a">More...</a><br /></td></tr>
+<tr class="memdesc:aace1737de9594d03f5e07f8eb75a6c7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable containing Servo current state.  <a href="#aace1737de9594d03f5e07f8eb75a6c7a">More...</a><br /></td></tr>
 <tr class="separator:aace1737de9594d03f5e07f8eb75a6c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -169,6 +177,27 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="af5c5d1d639dbe9c05432f9b5f7da56f7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PIT_IRQHandler </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>PIT ISR This function handles PIT interupts. </p>
+<ul>
+<li>Channel 2: Used to keep track of servo movement time. </li>
+</ul>
+
+</div>
+</div>
 <a class="anchor" id="afb8b2878cdf83e17a47a2bbfd84a13ed"></a>
 <div class="memitem">
 <div class="memproto">
@@ -190,7 +219,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>This function must be called AFTER <a class="el" href="sonar_8h.html#aa61bbb41b3a83a67b09bd239677cf96c" title="Initialize Sonar and required peripherials. ">Sonar_init</a> ! </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This function must be called AFTER <a class="el" href="sonar_8h.html#a11b02ebbeab065aabcab82dd386024ea" title="Initialize Sonar and required peripherials. ">Sonar_init</a> ! </dd></dl>
 
 </div>
 </div>
@@ -208,7 +237,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Move servo to a given position in degrees This function allows movment of servo in a direction specified by an angle. It will try to predict requied time needed by servo to finish rotation and set PIT_CH2 to countdown. It will also update <a class="el" href="servo_8c.html#aace1737de9594d03f5e07f8eb75a6c7a" title="Define Servo current state. ">ServoState</a> appropriately. </p>
+<p>Move servo to a given position in degrees This function allows movment of servo in a direction specified by an angle. It will try to predict requied time needed by servo to finish rotation and set PIT_CH2 to countdown. It will also update <a class="el" href="servo_8c.html#aace1737de9594d03f5e07f8eb75a6c7a" title="Variable containing Servo current state. ">ServoState</a> appropriately. </p>
 <dl class="section remark"><dt>Remarks</dt><dd>Avoid calling this function while servo is already moving. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -237,18 +266,36 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a1c1e027654d29aef3848af9f2e118688"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ServoChangeMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">ServoMode_t</a>&#160;</td>
+          <td class="paramname"><em>NewMode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function allows safe changing of servo work mode. This function prevents some rare cases of deadlock due to timing issues that might arise when Servo is changing mode. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="a17abd21d85ada3e51b18432cf1c2b426"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">ServoMode_t</a> ServoMode = <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caac132f2982b98bcaa3445e535a03ff75">OFF</a></td>
+          <td class="memname"><a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">ServoMode_t</a> ServoMode = <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8ca506e8dd29460ea318b68d035f679b01b">MANUAL</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define Servo Work mode Turn off servo by default. </p>
+<p>Define Servo Work mode Manual mode is default. </p>
 
 </div>
 </div>
@@ -277,7 +324,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define Servo current state. </p>
+<p>Variable containing Servo current state. </p>
 
 </div>
 </div>
@@ -302,7 +349,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_dfc317270c89deb8038687819d9c4f9f.html">sonar</a></li><li class="navelem"><a class="el" href="servo_8c.html">servo.c</a></li>
-    <li class="footer">Generated on Mon Dec 22 2014 02:06:40 for Zumo - Sonar lib by
+    <li class="footer">Generated on Tue Jan 27 2015 01:24:41 for Zumo - Sonar lib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

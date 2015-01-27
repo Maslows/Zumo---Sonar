@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['right',['RIGHT',['../servo_8c.html#a06fc87d81c62e9abb8790b6e5713c55baec8379af7490bb9eaaf579cf17876f38',1,'servo.c']]]
+  ['idle',['IDLE',['../servo_8h.html#a2d433bbccac873673ce5c7f76308e36aafd6a0e4343048b10646dd2976cc5ad18',1,'servo.h']]]
 ];

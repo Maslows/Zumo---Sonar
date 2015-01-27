@@ -2,6 +2,14 @@ var NAVTREE =
 [
   [ "Zumo - Sonar lib", "index.html", [
     [ "Todo List", "todo.html", null ],
+    [ "Data Structures", null, [
+      [ "Data Structures", "annotated.html", "annotated" ],
+      [ "Data Structure Index", "classes.html", null ],
+      [ "Data Fields", "functions.html", [
+        [ "All", "functions.html", null ],
+        [ "Variables", "functions_vars.html", null ]
+      ] ]
+    ] ],
     [ "Files", null, [
       [ "File List", "files.html", "files" ],
       [ "Globals", "globals.html", [
@@ -18,7 +26,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"dir_dfc317270c89deb8038687819d9c4f9f.html"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

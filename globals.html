@@ -45,6 +45,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -82,7 +83,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow4" class="tabs3">
     <ul class="tablist">
+      <li><a href="#index_a"><span>a</span></a></li>
+      <li><a href="#index_b"><span>b</span></a></li>
       <li><a href="#index_c"><span>c</span></a></li>
+      <li><a href="#index_d"><span>d</span></a></li>
+      <li><a href="#index_e"><span>e</span></a></li>
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
@@ -91,7 +96,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
-      <li class="current"><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_u"><span>u</span></a></li>
+      <li><a href="#index_v"><span>v</span></a></li>
+      <li class="current"><a href="#index_x"><span>x</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -114,7 +122,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -126,9 +134,141 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <div class="contents">
 <div class="textblock">Here is a list of all functions, variables, defines, enums, and typedefs with links to the files they belong to:</div>
 
+<h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
+<li>acceleration()
+: <a class="el" href="motor_driver_8c.html#a49f161db60701514cb04e1a832389fbe">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a49f161db60701514cb04e1a832389fbe">motorDriver.h</a>
+</li>
+<li>ACTUAL_DISTANCE
+: <a class="el" href="motor_driver_8c.html#a5504dc461f979adc25cc171acfebc1e4">motorDriver.c</a>
+</li>
+<li>AvgBuffer
+: <a class="el" href="sonar_8c.html#a3a58739f5877fdc67409cc923fd4579d">sonar.c</a>
+</li>
+<li>AvgPointer
+: <a class="el" href="sonar_8c.html#aa4d1c94c95701e93d300aacf96cb837a">sonar.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
+<li>BAUD_RATE
+: <a class="el" href="bluetooth_8h.html#ad4455691936f92fdd6c37566fc58ba1f">bluetooth.h</a>
+</li>
+<li>bt_getChar()
+: <a class="el" href="bluetooth_8c.html#aaf6401bea615560b2317eadeec074670">bluetooth.c</a>
+, <a class="el" href="bluetooth_8h.html#aaf6401bea615560b2317eadeec074670">bluetooth.h</a>
+</li>
+<li>bt_getStr()
+: <a class="el" href="bluetooth_8c.html#ad9503dbabb1f203a372431cb89c3d1f0">bluetooth.c</a>
+, <a class="el" href="bluetooth_8h.html#ad9503dbabb1f203a372431cb89c3d1f0">bluetooth.h</a>
+</li>
+<li>bt_init()
+: <a class="el" href="bluetooth_8c.html#abf5b078a34f2140691ca6f10aa5197e1">bluetooth.c</a>
+, <a class="el" href="bluetooth_8h.html#abf5b078a34f2140691ca6f10aa5197e1">bluetooth.h</a>
+</li>
+<li>bt_sendChar()
+: <a class="el" href="bluetooth_8c.html#a6231f952dfce20a3235815eb0143cced">bluetooth.c</a>
+, <a class="el" href="bluetooth_8h.html#a6231f952dfce20a3235815eb0143cced">bluetooth.h</a>
+</li>
+<li>bt_sendStr()
+: <a class="el" href="bluetooth_8h.html#ad0c7b930ecc1ce44a99e41a0a7cc7fff">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#ad0c7b930ecc1ce44a99e41a0a7cc7fff">bluetooth.c</a>
+</li>
+<li>buf_clear()
+: <a class="el" href="bluetooth_8h.html#a19f2c1bf41e4fa3bb97a0ef550356392">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#a19f2c1bf41e4fa3bb97a0ef550356392">bluetooth.c</a>
+</li>
+<li>buf_empty()
+: <a class="el" href="bluetooth_8h.html#acf002eda3b772a17cfb416ca999f84d9">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#acf002eda3b772a17cfb416ca999f84d9">bluetooth.c</a>
+</li>
+<li>buf_full()
+: <a class="el" href="bluetooth_8h.html#a0a38256cc7becaad1b0424b76767a3ae">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#a0a38256cc7becaad1b0424b76767a3ae">bluetooth.c</a>
+</li>
+<li>BUFF_SIZE
+: <a class="el" href="bluetooth_8h.html#a6c7cd32e1bac137f05e4a752b4ad10af">bluetooth.h</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
+<li>c
+: <a class="el" href="bluetooth_8c.html#adc08ed1554f35803d229aeaf11216b3f">bluetooth.c</a>
+</li>
+<li>CalculateAverage()
+: <a class="el" href="sonar_8c.html#a12ced322c061cc88286cf0af57d9efda">sonar.c</a>
+</li>
 <li>CONTINUOUS
-: <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a9191b0f571007d73a6fc0f6a39d2b866">sonar.h</a>
+: <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">sonar.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>DisableSonar()
+: <a class="el" href="sonar_8c.html#aa706918bd1dfaebfc3016b456fd360b0">sonar.c</a>
+, <a class="el" href="sonar_8h.html#aa706918bd1dfaebfc3016b456fd360b0">sonar.h</a>
+</li>
+<li>driveForward()
+: <a class="el" href="motor_driver_8h.html#a5c804f0174bb50cc2a0a69f8071bc080">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#a5c804f0174bb50cc2a0a69f8071bc080">motorDriver.c</a>
+</li>
+<li>driveForwardDist()
+: <a class="el" href="motor_driver_8c.html#a97f730beca7598c69c810799f277796b">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a97f730beca7598c69c810799f277796b">motorDriver.h</a>
+</li>
+<li>driveForwardDistLeftTrack()
+: <a class="el" href="motor_driver_8h.html#ad3be0cbb58eb73fd3cec70f502f090de">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#ad3be0cbb58eb73fd3cec70f502f090de">motorDriver.c</a>
+</li>
+<li>driveForwardDistRightTrack()
+: <a class="el" href="motor_driver_8c.html#abe0539a733e58d1a55e358dcd73da15f">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#abe0539a733e58d1a55e358dcd73da15f">motorDriver.h</a>
+</li>
+<li>driveForwardLeftTrack()
+: <a class="el" href="motor_driver_8c.html#ae01c2f729311325cace71aab9af1892e">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#ae01c2f729311325cace71aab9af1892e">motorDriver.h</a>
+</li>
+<li>driveForwardRightTrack()
+: <a class="el" href="motor_driver_8c.html#a48ababa0b6c00a5d6342a068b14b7ccc">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a48ababa0b6c00a5d6342a068b14b7ccc">motorDriver.h</a>
+</li>
+<li>driveReverse()
+: <a class="el" href="motor_driver_8h.html#add6327b0bda137e35e52f397a00c8d91">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#add6327b0bda137e35e52f397a00c8d91">motorDriver.c</a>
+</li>
+<li>driveReverseDist()
+: <a class="el" href="motor_driver_8c.html#adf4e02594d2a9d2ff80d6065269c5649">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#adf4e02594d2a9d2ff80d6065269c5649">motorDriver.h</a>
+</li>
+<li>driveReverseDistLeftTrack()
+: <a class="el" href="motor_driver_8c.html#a3cf33c53b95b5346864571ee8427d9b2">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a3cf33c53b95b5346864571ee8427d9b2">motorDriver.h</a>
+</li>
+<li>driveReverseDistRightTrack()
+: <a class="el" href="motor_driver_8c.html#a376e02b6e6b542b5a36d3b7404b87c46">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a376e02b6e6b542b5a36d3b7404b87c46">motorDriver.h</a>
+</li>
+<li>driveReverseLeftTrack()
+: <a class="el" href="motor_driver_8c.html#a0be76b8398e995f8bc38910d6868a308">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a0be76b8398e995f8bc38910d6868a308">motorDriver.h</a>
+</li>
+<li>driveReverseRightTrack()
+: <a class="el" href="motor_driver_8h.html#ac02f3ff6e5e0572b741b32498aa4bd21">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#ac02f3ff6e5e0572b741b32498aa4bd21">motorDriver.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
+<li>ECHO_MASK
+: <a class="el" href="sonar_8c.html#a46d9d17a962653141eaacd462625e243">sonar.c</a>
+</li>
+<li>EnableSonar()
+: <a class="el" href="sonar_8h.html#a66a59332cbb94838b8423b1437b28782">sonar.h</a>
+, <a class="el" href="sonar_8c.html#a66a59332cbb94838b8423b1437b28782">sonar.c</a>
 </li>
 </ul>
 
@@ -136,6 +276,13 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
 <li>fail
 : <a class="el" href="sonar_8c.html#a75b0e501ce80a9475b3d528a69cd1d87">sonar.c</a>
+</li>
+<li>FLAG_LIMIT_DIST
+: <a class="el" href="motor_driver_8c.html#a435de2d640b1895c9689481d3da3d41a">motorDriver.c</a>
+</li>
+<li>from_UART_buffer()
+: <a class="el" href="bluetooth_8c.html#af301032f8dd5c1e08344b5488efe11aa">bluetooth.c</a>
+, <a class="el" href="bluetooth_8h.html#af301032f8dd5c1e08344b5488efe11aa">bluetooth.h</a>
 </li>
 </ul>
 
@@ -149,7 +296,11 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
 <li>LEFT
-: <a class="el" href="servo_8c.html#a06fc87d81c62e9abb8790b6e5713c55badb45120aafd37a973140edee24708065">servo.c</a>
+: <a class="el" href="motor_driver_8c.html#a437ef08681e7210d6678427030446a54">motorDriver.c</a>
+, <a class="el" href="servo_8c.html#a06fc87d81c62e9abb8790b6e5713c55badb45120aafd37a973140edee24708065">servo.c</a>
+</li>
+<li>LIMIT
+: <a class="el" href="motor_driver_8c.html#ab65542908b98092f677f17541966d2ed">motorDriver.c</a>
 </li>
 </ul>
 
@@ -161,6 +312,10 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>MANUAL
 : <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8ca506e8dd29460ea318b68d035f679b01b">servo.h</a>
 </li>
+<li>motorDriverInit()
+: <a class="el" href="motor_driver_8h.html#a4e7b27c5715df8d71dfe87a22ae0b004">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#a4e7b27c5715df8d71dfe87a22ae0b004">motorDriver.c</a>
+</li>
 <li>MOVING
 : <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36aa16ebdcb23eb5337fd5bc598fa8d6035d">servo.h</a>
 </li>
@@ -168,30 +323,45 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
-<li>OFF
-: <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caac132f2982b98bcaa3445e535a03ff75">servo.h</a>
+<li>OVERWRITE
+: <a class="el" href="bluetooth_8h.html#aa90d04d1863ff9017f3ead6539c15fa1">bluetooth.h</a>
+</li>
+<li>overwrite_UART_buffer()
+: <a class="el" href="bluetooth_8h.html#a8db7fd3b6daecfe7f380c8dcdd62f88f">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#a8db7fd3b6daecfe7f380c8dcdd62f88f">bluetooth.c</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
 <li>PIT_IRQHandler()
-: <a class="el" href="sonar_8c.html#af5c5d1d639dbe9c05432f9b5f7da56f7">sonar.c</a>
+: <a class="el" href="servo_8c.html#af5c5d1d639dbe9c05432f9b5f7da56f7">servo.c</a>
+</li>
+<li>PRIORITY_INTERRUPT_DRIVE
+: <a class="el" href="motor_driver_8c.html#aef35aea42cc3c042a2e66f8cbd7e83df">motorDriver.c</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
+<li>retry_counter
+: <a class="el" href="sonar_8c.html#ad8be3272170d528da1364817561ce32e">sonar.c</a>
+</li>
+<li>ReturnSingleMeas()
+: <a class="el" href="sonar_8c.html#aa4e65e4f3583822971be016eed5cb96e">sonar.c</a>
+</li>
 <li>RIGHT
 : <a class="el" href="servo_8c.html#a06fc87d81c62e9abb8790b6e5713c55baec8379af7490bb9eaaf579cf17876f38">servo.c</a>
+, <a class="el" href="motor_driver_8c.html#a80fb826a684cf3f0d306b22aa100ddac">motorDriver.c</a>
+</li>
+<li>RxBuf
+: <a class="el" href="bluetooth_8h.html#a0b92d6781d419829ac248ec701982118">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#a0b92d6781d419829ac248ec701982118">bluetooth.c</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
-<li>SendTrigger()
-: <a class="el" href="sonar_8c.html#aff8d43f1ebc4a8e25ca43e1696af4cfe">sonar.c</a>
-</li>
 <li>SERTO_TICKS_PER_US
 : <a class="el" href="servo_8h.html#a4b14068f69d1ffd22d9a4a4e534ba5bb">servo.h</a>
 </li>
@@ -199,8 +369,8 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="servo_8h.html#afd6b3d47b4cc3eabdd64e99a67bf96e7">servo.h</a>
 </li>
 <li>Servo_init()
-: <a class="el" href="servo_8c.html#afb8b2878cdf83e17a47a2bbfd84a13ed">servo.c</a>
-, <a class="el" href="servo_8h.html#afb8b2878cdf83e17a47a2bbfd84a13ed">servo.h</a>
+: <a class="el" href="servo_8h.html#afb8b2878cdf83e17a47a2bbfd84a13ed">servo.h</a>
+, <a class="el" href="servo_8c.html#afb8b2878cdf83e17a47a2bbfd84a13ed">servo.c</a>
 </li>
 <li>Servo_move_by_degree()
 : <a class="el" href="servo_8c.html#a1c9c9b937742da4f905cc55a74b79ecd">servo.c</a>
@@ -222,9 +392,13 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>SERVO_SWEEP_STEP_DEG
 : <a class="el" href="servo_8h.html#a899400637795db7174931501b8b40516">servo.h</a>
 </li>
+<li>ServoChangeMode()
+: <a class="el" href="servo_8c.html#a1c1e027654d29aef3848af9f2e118688">servo.c</a>
+, <a class="el" href="servo_8h.html#a1c1e027654d29aef3848af9f2e118688">servo.h</a>
+</li>
 <li>ServoMode
-: <a class="el" href="servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426">servo.c</a>
-, <a class="el" href="servo_8h.html#a17abd21d85ada3e51b18432cf1c2b426">servo.h</a>
+: <a class="el" href="servo_8h.html#a17abd21d85ada3e51b18432cf1c2b426">servo.h</a>
+, <a class="el" href="servo_8c.html#a17abd21d85ada3e51b18432cf1c2b426">servo.c</a>
 </li>
 <li>ServoMode_t
 : <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8c">servo.h</a>
@@ -241,29 +415,17 @@ $(document).ready(function(){initNavTree('globals.html','');});
 : <a class="el" href="servo_8h.html#a2d433bbccac873673ce5c7f76308e36a">servo.h</a>
 </li>
 <li>SINGLE
-: <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a3388f7110f6f25a54e215eb75d5d7516">sonar.h</a>
+: <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">sonar.h</a>
 </li>
-<li>SONAR_AVG_MODE
-: <a class="el" href="sonar_8h.html#a5affd3b36be20953cbe5514ecb1d23a9">sonar.h</a>
+<li>SingleResult
+: <a class="el" href="sonar_8c.html#a2cd4654d994cc98ddc5b4ceffa4d2c98">sonar.c</a>
 </li>
 <li>SONAR_AVG_NUMBER
 : <a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b">sonar.h</a>
 </li>
-<li>SONAR_CAPTURE_END
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a4d3cab2f3e524a90ca10ca11d231a9cd">sonar.h</a>
-</li>
-<li>SONAR_CAPTURE_OVERFLOW
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281aee5ba9bab305ea8048e7d1849c9863ff">sonar.h</a>
-</li>
-<li>SONAR_CAPTURE_START
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a12f81920c5198203868e8b5d5db7c9f5">sonar.h</a>
-</li>
-<li>SONAR_IDLE
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a07e3cb491c24cc1bbb160a962a4cfc59">sonar.h</a>
-</li>
 <li>Sonar_init()
-: <a class="el" href="sonar_8c.html#aa61bbb41b3a83a67b09bd239677cf96c">sonar.c</a>
-, <a class="el" href="sonar_8h.html#aa61bbb41b3a83a67b09bd239677cf96c">sonar.h</a>
+: <a class="el" href="sonar_8c.html#a11b02ebbeab065aabcab82dd386024ea">sonar.c</a>
+, <a class="el" href="sonar_8h.html#a11b02ebbeab065aabcab82dd386024ea">sonar.h</a>
 </li>
 <li>SONAR_INTERUPT_PRIORITY
 : <a class="el" href="sonar_8h.html#a403b072b6fdfe59a42fcd7e26e32a4f3">sonar.h</a>
@@ -271,40 +433,49 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <li>SONAR_MAX_RANGE_CM
 : <a class="el" href="sonar_8h.html#accc26a2e71d62cabac5599480b217444">sonar.h</a>
 </li>
+<li>SONAR_MAXTRY
+: <a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63">sonar.h</a>
+</li>
 <li>SONAR_MEAS_INTERVAL_MS
 : <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0">sonar.h</a>
 </li>
 <li>SONAR_TICKS_PER_CM
 : <a class="el" href="sonar_8c.html#a3c0fce219d1f99a3f387fa0845bee71f">sonar.c</a>
 </li>
-<li>SONAR_TRIGGER_SENT
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a366fc733846a7631747e8c599e208341">sonar.h</a>
+<li>SonarChangeMode()
+: <a class="el" href="sonar_8c.html#a7b4e1f5dddc103f0cb52c133156c241e">sonar.c</a>
+, <a class="el" href="sonar_8h.html#a7b4e1f5dddc103f0cb52c133156c241e">sonar.h</a>
 </li>
 <li>SonarDistHandler()
-: <a class="el" href="sonar_8c.html#a86eef6da455b037173b71729addbbabc">sonar.c</a>
-, <a class="el" href="sonar_8h.html#a1e1a0ad5e1194e9983d26c84c1f2c634">sonar.h</a>
-</li>
-<li>SonarFSM
-: <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281">sonar.h</a>
+: <a class="el" href="sonar_8h.html#aefebcdf88c071ac865fec697be7af7cf">sonar.h</a>
+, <a class="el" href="sonar_8c.html#ae81e58eda1f172e0f29250cb6ac5ed7a">sonar.c</a>
 </li>
 <li>SonarGetDistance()
-: <a class="el" href="sonar_8c.html#ab806322900d6f7aee955e198bf4893c8">sonar.c</a>
-, <a class="el" href="sonar_8h.html#ab806322900d6f7aee955e198bf4893c8">sonar.h</a>
+: <a class="el" href="sonar_8c.html#acbfc04f4efdc8692cf46217b1331bfd4">sonar.c</a>
+, <a class="el" href="sonar_8h.html#acbfc04f4efdc8692cf46217b1331bfd4">sonar.h</a>
 </li>
 <li>SonarMode
-: <a class="el" href="sonar_8c.html#a39581d0ec8dddb42a2cb1df283d3de42">sonar.c</a>
-, <a class="el" href="sonar_8h.html#a39581d0ec8dddb42a2cb1df283d3de42">sonar.h</a>
+: <a class="el" href="sonar_8h.html#ad2046f041ee5ecb52f1efd187ae0e9db">sonar.h</a>
+, <a class="el" href="sonar_8c.html#ad2046f041ee5ecb52f1efd187ae0e9db">sonar.c</a>
+</li>
+<li>SonarMode_t
+: <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">sonar.h</a>
 </li>
 <li>SonarStartMeas()
-: <a class="el" href="sonar_8c.html#abd69db8cc01c44c40690a6b6cc795860">sonar.c</a>
-, <a class="el" href="sonar_8h.html#abd69db8cc01c44c40690a6b6cc795860">sonar.h</a>
+: <a class="el" href="sonar_8h.html#af0c249436f7ef0657389cc40941da5cf">sonar.h</a>
+, <a class="el" href="sonar_8c.html#af0c249436f7ef0657389cc40941da5cf">sonar.c</a>
 </li>
-<li>SonarState
-: <a class="el" href="sonar_8c.html#a6faa66e593ade7813b3e52d512b10cf4">sonar.c</a>
-, <a class="el" href="sonar_8h.html#a6faa66e593ade7813b3e52d512b10cf4">sonar.h</a>
+<li>speed
+: <a class="el" href="motor_driver_8h.html#aae32029df16a54aa86c0aec2df9f7bb7">motorDriver.h</a>
+, <a class="el" href="motor_driver_8c.html#aae32029df16a54aa86c0aec2df9f7bb7">motorDriver.c</a>
 </li>
-<li>SonarWorkModes
-: <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">sonar.h</a>
+<li>stop()
+: <a class="el" href="motor_driver_8c.html#aacf6bf8e121fea8b0a92d7197b73fe27">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#aacf6bf8e121fea8b0a92d7197b73fe27">motorDriver.h</a>
+</li>
+<li>string_count
+: <a class="el" href="bluetooth_8h.html#ae0b07eb3386d833f10670a32c37926e8">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#ae0b07eb3386d833f10670a32c37926e8">bluetooth.c</a>
 </li>
 <li>success
 : <a class="el" href="sonar_8c.html#af69417da33b5e397657722c33d5d00ca">sonar.c</a>
@@ -319,8 +490,64 @@ $(document).ready(function(){initNavTree('globals.html','');});
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
+<li>tab
+: <a class="el" href="main_8c.html#a93c3eb2fc162e26d6e25fb63eadb4d6a">main.c</a>
+</li>
+<li>tmp
+: <a class="el" href="motor_driver_8c.html#aae0c318e40fda05b881a6aa3ed109044">motorDriver.c</a>
+</li>
+<li>to_UART_buffer()
+: <a class="el" href="bluetooth_8h.html#a3db86f1993d3e7f684d9e35e2e850051">bluetooth.h</a>
+, <a class="el" href="bluetooth_8c.html#a3db86f1993d3e7f684d9e35e2e850051">bluetooth.c</a>
+</li>
+<li>TPM0_IRQnHandler()
+: <a class="el" href="motor_driver_8c.html#a2413949f6075c24ebf82c71cedefb632">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a2413949f6075c24ebf82c71cedefb632">motorDriver.h</a>
+</li>
 <li>TPM1_IRQHandler()
 : <a class="el" href="sonar_8c.html#a83cdb8d63e8beb61594f296426783711">sonar.c</a>
+</li>
+<li>turnLeft()
+: <a class="el" href="motor_driver_8c.html#a0b289c63b0eb2d40e0014edb3ca200ba">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a0b289c63b0eb2d40e0014edb3ca200ba">motorDriver.h</a>
+</li>
+<li>turnRight()
+: <a class="el" href="motor_driver_8c.html#a54ce3f91aa84bade18eaffb5381560a1">motorDriver.c</a>
+, <a class="el" href="motor_driver_8h.html#a54ce3f91aa84bade18eaffb5381560a1">motorDriver.h</a>
+</li>
+<li>TxBuf
+: <a class="el" href="bluetooth_8c.html#abef669148df3caa8d894a8a16290d528">bluetooth.c</a>
+, <a class="el" href="bluetooth_8h.html#abef669148df3caa8d894a8a16290d528">bluetooth.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
+<li>UART
+: <a class="el" href="bluetooth_8h.html#ae9d9d8123e43b76a1d9d01cd81da7789">bluetooth.h</a>
+</li>
+<li>UART0_IRQHandler()
+: <a class="el" href="bluetooth_8c.html#a1c0544b06d54b198d8c50f507e399a91">bluetooth.c</a>
+</li>
+<li>UART_IRQ_PRIORITY
+: <a class="el" href="bluetooth_8h.html#af6f101c4d131dba9dcbf59834db3b4ad">bluetooth.h</a>
+</li>
+<li>UART_MODULE
+: <a class="el" href="bluetooth_8h.html#aa8408d081cc7ddf35547426dee549cc5">bluetooth.h</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
+<li>V_MOD
+: <a class="el" href="motor_driver_8c.html#ae63f3dbb966dcb986f3c8d805c9df75e">motorDriver.c</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_x"></a>- x -</h3><ul>
+<li>XUART
+: <a class="el" href="bluetooth_8h.html#ad60d85cfec9edefe7558f0018a38e18b">bluetooth.h</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -328,7 +555,7 @@ $(document).ready(function(){initNavTree('globals.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Mon Dec 22 2014 02:06:41 for Zumo - Sonar lib by
+    <li class="footer">Generated on Tue Jan 27 2015 01:24:42 for Zumo - Sonar lib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>

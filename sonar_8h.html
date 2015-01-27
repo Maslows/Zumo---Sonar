@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.8"/>
-<title>Zumo - Sonar lib: C:/Users/Kamil/Dropbox/EIT/3_Rok/Microprocessor Technology 2/ZUMO/sonar/sonar.h File Reference</title>
+<title>Zumo - Sonar lib: sonar.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,6 +45,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,7 +91,7 @@ $(document).ready(function(){initNavTree('sonar_8h.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,93 +116,72 @@ $(document).ready(function(){initNavTree('sonar_8h.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a403b072b6fdfe59a42fcd7e26e32a4f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a403b072b6fdfe59a42fcd7e26e32a4f3">SONAR_INTERUPT_PRIORITY</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memitem:a403b072b6fdfe59a42fcd7e26e32a4f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a403b072b6fdfe59a42fcd7e26e32a4f3">SONAR_INTERUPT_PRIORITY</a>&#160;&#160;&#160;2</td></tr>
 <tr class="memdesc:a403b072b6fdfe59a42fcd7e26e32a4f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define sonar IRQ priority.  <a href="#a403b072b6fdfe59a42fcd7e26e32a4f3">More...</a><br /></td></tr>
 <tr class="separator:a403b072b6fdfe59a42fcd7e26e32a4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0">SONAR_MEAS_INTERVAL_MS</a>&#160;&#160;&#160;50</td></tr>
-<tr class="memdesc:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define sonar measurment interval. Triggers are send every <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0" title="Define sonar measurment interval. Triggers are send every SONAR_MEAS_INTERVAL_MS by TPM1...">SONAR_MEAS_INTERVAL_MS</a> by TPM1. Setting lower value will increese measurmend speed but it will also make sonar more prone to residiual echo from previous measurments.  <a href="#ae5e988fb642c42b7fdb79aa5e0be30a0">More...</a><br /></td></tr>
+<tr class="memitem:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0">SONAR_MEAS_INTERVAL_MS</a>&#160;&#160;&#160;35</td></tr>
+<tr class="memdesc:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define sonar measurment interval. Triggers are send every <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0" title="Define sonar measurment interval. Triggers are send every SONAR_MEAS_INTERVAL_MS by TPM1...">SONAR_MEAS_INTERVAL_MS</a> by TPM1. Setting lower value will increese measurement speed but it will also make sonar more prone to residiual echo from previous measurements.  <a href="#ae5e988fb642c42b7fdb79aa5e0be30a0">More...</a><br /></td></tr>
 <tr class="separator:ae5e988fb642c42b7fdb79aa5e0be30a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accc26a2e71d62cabac5599480b217444"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#accc26a2e71d62cabac5599480b217444">SONAR_MAX_RANGE_CM</a>&#160;&#160;&#160;300</td></tr>
+<tr class="memitem:accc26a2e71d62cabac5599480b217444"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#accc26a2e71d62cabac5599480b217444">SONAR_MAX_RANGE_CM</a>&#160;&#160;&#160;200</td></tr>
 <tr class="memdesc:accc26a2e71d62cabac5599480b217444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines maximum wanted range of a sonar All measurments which return value greather than this, will be changed into 0. It is useful when we want to limit background noise picked up by a sonar.  <a href="#accc26a2e71d62cabac5599480b217444">More...</a><br /></td></tr>
 <tr class="separator:accc26a2e71d62cabac5599480b217444"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5affd3b36be20953cbe5514ecb1d23a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a5affd3b36be20953cbe5514ecb1d23a9">SONAR_AVG_MODE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:a5affd3b36be20953cbe5514ecb1d23a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable averaging. When enabled echo measurment will actually result in average of <a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b" title="Define number of measurment to average. When SONAR_AVG_MODE is enabled measurment will actually resul...">SONAR_AVG_NUMBER</a> measurments 0 - off 1 - on.  <a href="#a5affd3b36be20953cbe5514ecb1d23a9">More...</a><br /></td></tr>
-<tr class="separator:a5affd3b36be20953cbe5514ecb1d23a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a654a02dec6f794c16f31690b6ef7ec7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b">SONAR_AVG_NUMBER</a>&#160;&#160;&#160;5</td></tr>
-<tr class="memdesc:a654a02dec6f794c16f31690b6ef7ec7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define number of measurment to average. When <a class="el" href="sonar_8h.html#a5affd3b36be20953cbe5514ecb1d23a9" title="Enable or disable averaging. When enabled echo measurment will actually result in average of SONAR_AV...">SONAR_AVG_MODE</a> is enabled measurment will actually result in average of <a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b" title="Define number of measurment to average. When SONAR_AVG_MODE is enabled measurment will actually resul...">SONAR_AVG_NUMBER</a> measurments.  <a href="#a654a02dec6f794c16f31690b6ef7ec7b">More...</a><br /></td></tr>
+<tr class="memitem:a654a02dec6f794c16f31690b6ef7ec7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b">SONAR_AVG_NUMBER</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:a654a02dec6f794c16f31690b6ef7ec7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define number of measurment to average. When set to 1, measurments are not avergaged. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode it is a good idea to slightly bigger number (3-10). Next measurement is done as soon as the previous one is done so the increese in delay is not big.  <a href="#a654a02dec6f794c16f31690b6ef7ec7b">More...</a><br /></td></tr>
 <tr class="separator:a654a02dec6f794c16f31690b6ef7ec7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63">SONAR_MAXTRY</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define maximum number of measurment retries. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a> mode when sonar fails to obtain usable data after <a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63" title="Define maximum number of measurment retries. In SINGLE mode when sonar fails to obtain usable data af...">SONAR_MAXTRY</a> it will return 0. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> it will return 0 and retry again. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode it will proceed with the next step.  <a href="#a3a2f4484d83d3d7f548c6fe56e85fb63">More...</a><br /></td></tr>
+<tr class="separator:a3a2f4484d83d3d7f548c6fe56e85fb63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a693dc1e4acb94a17457de163dba95281"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281">SonarFSM</a> { <br />
-&#160;&#160;<a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a07e3cb491c24cc1bbb160a962a4cfc59">SONAR_IDLE</a>, 
-<a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a366fc733846a7631747e8c599e208341">SONAR_TRIGGER_SENT</a>, 
-<a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a12f81920c5198203868e8b5d5db7c9f5">SONAR_CAPTURE_START</a>, 
-<a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281a4d3cab2f3e524a90ca10ca11d231a9cd">SONAR_CAPTURE_END</a>, 
-<br />
-&#160;&#160;<a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281aee5ba9bab305ea8048e7d1849c9863ff">SONAR_CAPTURE_OVERFLOW</a>
-<br />
+<tr class="memitem:a14c67c304a8dae03c9577eb5e285d686"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a> { <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a>, 
+<a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a>
  }</td></tr>
-<tr class="memdesc:a693dc1e4acb94a17457de163dba95281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Sonar FSM states.  <a href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281">More...</a><br /></td></tr>
-<tr class="separator:a693dc1e4acb94a17457de163dba95281"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbd34a926249020be7c9d3174b11c561"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">SonarWorkModes</a> { <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a>, 
-<a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a>
- }</td></tr>
-<tr class="memdesc:adbd34a926249020be7c9d3174b11c561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Sonar work modes.  <a href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">More...</a><br /></td></tr>
-<tr class="separator:adbd34a926249020be7c9d3174b11c561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:a14c67c304a8dae03c9577eb5e285d686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define Sonar work modes.  <a href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">More...</a><br /></td></tr>
+<tr class="separator:a14c67c304a8dae03c9577eb5e285d686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa61bbb41b3a83a67b09bd239677cf96c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#aa61bbb41b3a83a67b09bd239677cf96c">Sonar_init</a> (<a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">SonarWorkModes</a> InitialWorkMode)</td></tr>
-<tr class="memdesc:aa61bbb41b3a83a67b09bd239677cf96c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Sonar and required peripherials.  <a href="#aa61bbb41b3a83a67b09bd239677cf96c">More...</a><br /></td></tr>
-<tr class="separator:aa61bbb41b3a83a67b09bd239677cf96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e1a0ad5e1194e9983d26c84c1f2c634"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a1e1a0ad5e1194e9983d26c84c1f2c634">SonarDistHandler</a> (uint16_t distance)</td></tr>
-<tr class="memdesc:a1e1a0ad5e1194e9983d26c84c1f2c634"><td class="mdescLeft">&#160;</td><td class="mdescRight">User handler for sonar measurment results This function handles results from sonar's continuous measurments. It is also called when user triggered single measurment finishes. User can specify here what to do with the results. If sonar is used, user can obtain the angle at which the measurment was taken by reading global variable <a class="el" href="servo_8h.html#a6ca30760f53d2a937b251cfb0e76a6e0" title="Define Servo Position in degrees. This variable contains predicted position of a servo. ">ServoPosition</a>.  <a href="#a1e1a0ad5e1194e9983d26c84c1f2c634">More...</a><br /></td></tr>
-<tr class="separator:a1e1a0ad5e1194e9983d26c84c1f2c634"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd69db8cc01c44c40690a6b6cc795860"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#abd69db8cc01c44c40690a6b6cc795860">SonarStartMeas</a> (void)</td></tr>
-<tr class="memdesc:abd69db8cc01c44c40690a6b6cc795860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a single sonar measurment This function can be used to trigger a single measurment. Interupt will trigger <a class="el" href="sonar_8c.html#a86eef6da455b037173b71729addbbabc" title="User handler for sonar measurment results This function handles results from sonar&#39;s continuous measu...">SonarDistHandler</a>.  <a href="#abd69db8cc01c44c40690a6b6cc795860">More...</a><br /></td></tr>
-<tr class="separator:abd69db8cc01c44c40690a6b6cc795860"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab806322900d6f7aee955e198bf4893c8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#ab806322900d6f7aee955e198bf4893c8">SonarGetDistance</a> (void)</td></tr>
-<tr class="memdesc:ab806322900d6f7aee955e198bf4893c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a single sonar measurment and return distance in cm. This function can be used to trigger a single measurment.  <a href="#ab806322900d6f7aee955e198bf4893c8">More...</a><br /></td></tr>
-<tr class="separator:ab806322900d6f7aee955e198bf4893c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11b02ebbeab065aabcab82dd386024ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a11b02ebbeab065aabcab82dd386024ea">Sonar_init</a> (<a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a> InitialWorkMode)</td></tr>
+<tr class="memdesc:a11b02ebbeab065aabcab82dd386024ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Sonar and required peripherials.  <a href="#a11b02ebbeab065aabcab82dd386024ea">More...</a><br /></td></tr>
+<tr class="separator:a11b02ebbeab065aabcab82dd386024ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefebcdf88c071ac865fec697be7af7cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#aefebcdf88c071ac865fec697be7af7cf">SonarDistHandler</a> (uint16_t distance, int32_t angle)</td></tr>
+<tr class="memdesc:aefebcdf88c071ac865fec697be7af7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">User handler for sonar measurment results This function handles results from sonar's continuous measurments. It is also called when user triggered single measurment finishes. User can specify here what to do with the results. If sonar is used, user can obtain the angle at which the measurment was taken by reading global variable <a class="el" href="servo_8h.html#a6ca30760f53d2a937b251cfb0e76a6e0" title="Define Servo Position in degrees. This variable contains predicted position of a servo. ">ServoPosition</a>.  <a href="#aefebcdf88c071ac865fec697be7af7cf">More...</a><br /></td></tr>
+<tr class="separator:aefebcdf88c071ac865fec697be7af7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b4e1f5dddc103f0cb52c133156c241e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a7b4e1f5dddc103f0cb52c133156c241e">SonarChangeMode</a> (<a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a> NewMode)</td></tr>
+<tr class="memdesc:a7b4e1f5dddc103f0cb52c133156c241e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function allows save changing of sonar work mode.  <a href="#a7b4e1f5dddc103f0cb52c133156c241e">More...</a><br /></td></tr>
+<tr class="separator:a7b4e1f5dddc103f0cb52c133156c241e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0c249436f7ef0657389cc40941da5cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#af0c249436f7ef0657389cc40941da5cf">SonarStartMeas</a> (int32_t angle)</td></tr>
+<tr class="memdesc:af0c249436f7ef0657389cc40941da5cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a single sonar measurment This function can be used to trigger a single measurment. Interupt will trigger <a class="el" href="sonar_8c.html#ae81e58eda1f172e0f29250cb6ac5ed7a" title="User handler for sonar measurment results This function handles results from sonar&#39;s continuous measu...">SonarDistHandler</a>.  <a href="#af0c249436f7ef0657389cc40941da5cf">More...</a><br /></td></tr>
+<tr class="separator:af0c249436f7ef0657389cc40941da5cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbfc04f4efdc8692cf46217b1331bfd4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#acbfc04f4efdc8692cf46217b1331bfd4">SonarGetDistance</a> (int32_t angle)</td></tr>
+<tr class="memdesc:acbfc04f4efdc8692cf46217b1331bfd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a single sonar measurment and return distance in cm. This function can be used to trigger a single measurment.  <a href="#acbfc04f4efdc8692cf46217b1331bfd4">More...</a><br /></td></tr>
+<tr class="separator:acbfc04f4efdc8692cf46217b1331bfd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66a59332cbb94838b8423b1437b28782"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a66a59332cbb94838b8423b1437b28782">EnableSonar</a> (void)</td></tr>
+<tr class="memdesc:a66a59332cbb94838b8423b1437b28782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable sonar operations and interupts.  <a href="#a66a59332cbb94838b8423b1437b28782">More...</a><br /></td></tr>
+<tr class="separator:a66a59332cbb94838b8423b1437b28782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa706918bd1dfaebfc3016b456fd360b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#aa706918bd1dfaebfc3016b456fd360b0">DisableSonar</a> (void)</td></tr>
+<tr class="memdesc:aa706918bd1dfaebfc3016b456fd360b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable all sonar operations and interupts.  <a href="#aa706918bd1dfaebfc3016b456fd360b0">More...</a><br /></td></tr>
+<tr class="separator:aa706918bd1dfaebfc3016b456fd360b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a39581d0ec8dddb42a2cb1df283d3de42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">SonarWorkModes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a39581d0ec8dddb42a2cb1df283d3de42">SonarMode</a></td></tr>
-<tr class="memdesc:a39581d0ec8dddb42a2cb1df283d3de42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define sonar work mode.  <a href="#a39581d0ec8dddb42a2cb1df283d3de42">More...</a><br /></td></tr>
-<tr class="separator:a39581d0ec8dddb42a2cb1df283d3de42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6faa66e593ade7813b3e52d512b10cf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281">SonarFSM</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#a6faa66e593ade7813b3e52d512b10cf4">SonarState</a></td></tr>
-<tr class="memdesc:a6faa66e593ade7813b3e52d512b10cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines current sonar state.  <a href="#a6faa66e593ade7813b3e52d512b10cf4">More...</a><br /></td></tr>
-<tr class="separator:a6faa66e593ade7813b3e52d512b10cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2046f041ee5ecb52f1efd187ae0e9db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sonar_8h.html#ad2046f041ee5ecb52f1efd187ae0e9db">SonarMode</a></td></tr>
+<tr class="memdesc:ad2046f041ee5ecb52f1efd187ae0e9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define sonar work mode.  <a href="#ad2046f041ee5ecb52f1efd187ae0e9db">More...</a><br /></td></tr>
+<tr class="separator:ad2046f041ee5ecb52f1efd187ae0e9db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a5affd3b36be20953cbe5514ecb1d23a9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SONAR_AVG_MODE&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enable or disable averaging. When enabled echo measurment will actually result in average of <a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b" title="Define number of measurment to average. When SONAR_AVG_MODE is enabled measurment will actually resul...">SONAR_AVG_NUMBER</a> measurments 0 - off 1 - on. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Function not implemented yet </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a654a02dec6f794c16f31690b6ef7ec7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SONAR_AVG_NUMBER&#160;&#160;&#160;5</td>
+          <td class="memname">#define SONAR_AVG_NUMBER&#160;&#160;&#160;3</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define number of measurment to average. When <a class="el" href="sonar_8h.html#a5affd3b36be20953cbe5514ecb1d23a9" title="Enable or disable averaging. When enabled echo measurment will actually result in average of SONAR_AV...">SONAR_AVG_MODE</a> is enabled measurment will actually result in average of <a class="el" href="sonar_8h.html#a654a02dec6f794c16f31690b6ef7ec7b" title="Define number of measurment to average. When SONAR_AVG_MODE is enabled measurment will actually resul...">SONAR_AVG_NUMBER</a> measurments. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Function not implemented yet </dd></dl>
+<p>Define number of measurment to average. When set to 1, measurments are not avergaged. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode it is a good idea to slightly bigger number (3-10). Next measurement is done as soon as the previous one is done so the increese in delay is not big. </p>
 
 </div>
 </div>
@@ -210,7 +190,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SONAR_INTERUPT_PRIORITY&#160;&#160;&#160;3</td>
+          <td class="memname">#define SONAR_INTERUPT_PRIORITY&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -224,13 +204,27 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SONAR_MAX_RANGE_CM&#160;&#160;&#160;300</td>
+          <td class="memname">#define SONAR_MAX_RANGE_CM&#160;&#160;&#160;200</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Defines maximum wanted range of a sonar All measurments which return value greather than this, will be changed into 0. It is useful when we want to limit background noise picked up by a sonar. </p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Function not implemented yet </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3a2f4484d83d3d7f548c6fe56e85fb63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SONAR_MAXTRY&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define maximum number of measurment retries. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a> mode when sonar fails to obtain usable data after <a class="el" href="sonar_8h.html#a3a2f4484d83d3d7f548c6fe56e85fb63" title="Define maximum number of measurment retries. In SINGLE mode when sonar fails to obtain usable data af...">SONAR_MAXTRY</a> it will return 0. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> it will return 0 and retry again. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode it will proceed with the next step. </p>
+<dl class="section note"><dt>Note</dt><dd>This is a number of failed measurements IN ROW after which sonar gives up. For example is set to 3 and 2 measurements fails and then next one is successful, counter will be set back to 0. </dd></dl>
 
 </div>
 </div>
@@ -239,80 +233,86 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SONAR_MEAS_INTERVAL_MS&#160;&#160;&#160;50</td>
+          <td class="memname">#define SONAR_MEAS_INTERVAL_MS&#160;&#160;&#160;35</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Define sonar measurment interval. Triggers are send every <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0" title="Define sonar measurment interval. Triggers are send every SONAR_MEAS_INTERVAL_MS by TPM1...">SONAR_MEAS_INTERVAL_MS</a> by TPM1. Setting lower value will increese measurmend speed but it will also make sonar more prone to residiual echo from previous measurments. </p>
+<p>Define sonar measurment interval. Triggers are send every <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0" title="Define sonar measurment interval. Triggers are send every SONAR_MEAS_INTERVAL_MS by TPM1...">SONAR_MEAS_INTERVAL_MS</a> by TPM1. Setting lower value will increese measurement speed but it will also make sonar more prone to residiual echo from previous measurements. </p>
 <dl class="section warning"><dt>Warning</dt><dd>Setting this to less than 35ms may produce sensor unsuable due to overlaping echos. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This setting is not used when Servo is in <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode. In <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> mode measurements are done without any delay. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="a693dc1e4acb94a17457de163dba95281"></a>
+<a class="anchor" id="a14c67c304a8dae03c9577eb5e285d686"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281">SonarFSM</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Define Sonar FSM states. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a693dc1e4acb94a17457de163dba95281a07e3cb491c24cc1bbb160a962a4cfc59"></a>SONAR_IDLE&#160;</td><td class="fielddoc">
-<p>Idle - waiting for a trigger. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a693dc1e4acb94a17457de163dba95281a366fc733846a7631747e8c599e208341"></a>SONAR_TRIGGER_SENT&#160;</td><td class="fielddoc">
-<p>A trigger was sent. Waiting for echo. </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a693dc1e4acb94a17457de163dba95281a12f81920c5198203868e8b5d5db7c9f5"></a>SONAR_CAPTURE_START&#160;</td><td class="fielddoc">
-<p>Reciving echo and measuring its length </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a693dc1e4acb94a17457de163dba95281a4d3cab2f3e524a90ca10ca11d231a9cd"></a>SONAR_CAPTURE_END&#160;</td><td class="fielddoc">
-<p>Capture complete </p>
-</td></tr>
-<tr><td class="fieldname"><a class="anchor" id="a693dc1e4acb94a17457de163dba95281aee5ba9bab305ea8048e7d1849c9863ff"></a>SONAR_CAPTURE_OVERFLOW&#160;</td><td class="fielddoc">
-<p>Echo length exceeded maximum value defined by <a class="el" href="sonar_8h.html#accc26a2e71d62cabac5599480b217444" title="Defines maximum wanted range of a sonar All measurments which return value greather than this...">SONAR_MAX_RANGE_CM</a> </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="adbd34a926249020be7c9d3174b11c561"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">SonarWorkModes</a></td>
+          <td class="memname">enum <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Define Sonar work modes. </p>
-<p>Sonar can operate in two modes. <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> and <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a>. In <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> mode Sonar triggers are generated periodicaly by TPM. In <a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a> mode, a trigger must be generated by a user </p>
+<p>Sonar can operate in two modes. <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> and <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a>. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> mode Sonar triggers are generated automatically. In <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516">SINGLE</a> mode, measurment is done using <a class="el" href="sonar_8h.html#af0c249436f7ef0657389cc40941da5cf" title="Initialize a single sonar measurment This function can be used to trigger a single measurment...">SonarStartMeas</a> and <a class="el" href="sonar_8h.html#acbfc04f4efdc8692cf46217b1331bfd4" title="Initialize a single sonar measurment and return distance in cm. This function can be used to trigger ...">SonarGetDistance</a> functions </p><dl class="section note"><dt>Note</dt><dd>Setting servo to <a class="el" href="servo_8h.html#adb4fe5913bad3ac2c2c8a43382a19f8caf79ba459cbd48e08da1516e074328cc7">SWEEP</a> will automatically set Sonar mode to <a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866">CONTINUOUS</a> </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="adbd34a926249020be7c9d3174b11c561a9191b0f571007d73a6fc0f6a39d2b866"></a>CONTINUOUS&#160;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a14c67c304a8dae03c9577eb5e285d686a9191b0f571007d73a6fc0f6a39d2b866"></a>CONTINUOUS&#160;</td><td class="fielddoc">
 <p>Repeat measurment every <a class="el" href="sonar_8h.html#ae5e988fb642c42b7fdb79aa5e0be30a0" title="Define sonar measurment interval. Triggers are send every SONAR_MEAS_INTERVAL_MS by TPM1...">SONAR_MEAS_INTERVAL_MS</a> </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="adbd34a926249020be7c9d3174b11c561a3388f7110f6f25a54e215eb75d5d7516"></a>SINGLE&#160;</td><td class="fielddoc">
-<p>Perform single measurment and go idle </p>
+<tr><td class="fieldname"><a class="anchor" id="a14c67c304a8dae03c9577eb5e285d686a3388f7110f6f25a54e215eb75d5d7516"></a>SINGLE&#160;</td><td class="fielddoc">
+<p>Perform single measurment </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="aa61bbb41b3a83a67b09bd239677cf96c"></a>
+<a class="anchor" id="aa706918bd1dfaebfc3016b456fd360b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DisableSonar </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable all sonar operations and interupts. </p>
+
+</div>
+</div>
+<a class="anchor" id="a66a59332cbb94838b8423b1437b28782"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EnableSonar </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable sonar operations and interupts. </p>
+
+</div>
+</div>
+<a class="anchor" id="a11b02ebbeab065aabcab82dd386024ea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Sonar_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">SonarWorkModes</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a>&#160;</td>
           <td class="paramname"><em>InitialWorkMode</em></td><td>)</td>
           <td></td>
         </tr>
@@ -329,7 +329,25 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1e1a0ad5e1194e9983d26c84c1f2c634"></a>
+<a class="anchor" id="a7b4e1f5dddc103f0cb52c133156c241e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SonarChangeMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a>&#160;</td>
+          <td class="paramname"><em>NewMode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function allows save changing of sonar work mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="aefebcdf88c071ac865fec697be7af7cf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -337,8 +355,18 @@ Variables</h2></td></tr>
           <td class="memname">void SonarDistHandler </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>distance_cm</em></td><td>)</td>
+          <td class="paramname"><em>distance_cm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>angle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -347,79 +375,77 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">distance_cm</td><td>Measured distance in cm. If measurment failed or was out of range function will be called with parameter 0. </td></tr>
+    <tr><td class="paramname">angle</td><td>Contains the angle at which the measurement was done </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ab806322900d6f7aee955e198bf4893c8"></a>
+<a class="anchor" id="acbfc04f4efdc8692cf46217b1331bfd4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">uint16_t SonarGetDistance </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>angle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Initialize a single sonar measurment and return distance in cm. This function can be used to trigger a single measurment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">angle</td><td>Specify at what Servo angle measurement should be taken </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function uses busy-waiting to check servo and sonar readiness </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Measured distance in cm </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="abd69db8cc01c44c40690a6b6cc795860"></a>
+<a class="anchor" id="af0c249436f7ef0657389cc40941da5cf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void SonarStartMeas </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>angle</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initialize a single sonar measurment This function can be used to trigger a single measurment. Interupt will trigger <a class="el" href="sonar_8c.html#a86eef6da455b037173b71729addbbabc" title="User handler for sonar measurment results This function handles results from sonar&#39;s continuous measu...">SonarDistHandler</a>. </p>
+<p>Initialize a single sonar measurment This function can be used to trigger a single measurment. Interupt will trigger <a class="el" href="sonar_8c.html#ae81e58eda1f172e0f29250cb6ac5ed7a" title="User handler for sonar measurment results This function handles results from sonar&#39;s continuous measu...">SonarDistHandler</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">angle</td><td>Specify at what Servo angle measurement should be taken </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function uses busy-waiting to check servo and sonar readiness </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a class="anchor" id="a39581d0ec8dddb42a2cb1df283d3de42"></a>
+<a class="anchor" id="ad2046f041ee5ecb52f1efd187ae0e9db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="sonar_8h.html#adbd34a926249020be7c9d3174b11c561">SonarWorkModes</a> SonarMode</td>
+          <td class="memname"><a class="el" href="sonar_8h.html#a14c67c304a8dae03c9577eb5e285d686">SonarMode_t</a> SonarMode</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Define sonar work mode. </p>
-<p>This variable sets sonar work mode. You can set it to different mode during run time </p>
-
-</div>
-</div>
-<a class="anchor" id="a6faa66e593ade7813b3e52d512b10cf4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="sonar_8h.html#a693dc1e4acb94a17457de163dba95281">SonarFSM</a> SonarState</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Defines current sonar state. </p>
-<p>Default sonar work mode is SINGLE </p><dl class="section warning"><dt>Warning</dt><dd>{Do NOT change this anywhere except <a class="el" href="sonar_8c.html#a86eef6da455b037173b71729addbbabc" title="User handler for sonar measurment results This function handles results from sonar&#39;s continuous measu...">SonarDistHandler()</a>. Doing so might result in deadlock.} </dd></dl>
+<p>This variable sets sonar work mode. You can change it using <a class="el" href="sonar_8c.html#a7b4e1f5dddc103f0cb52c133156c241e" title="This function allows save changing of sonar work mode. ">SonarChangeMode</a> </p><dl class="section warning"><dt>Warning</dt><dd>Do NOT modify this variable by hand! </dd></dl>
 
 </div>
 </div>
@@ -429,7 +455,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_dfc317270c89deb8038687819d9c4f9f.html">sonar</a></li><li class="navelem"><a class="el" href="sonar_8h.html">sonar.h</a></li>
-    <li class="footer">Generated on Mon Dec 22 2014 02:06:40 for Zumo - Sonar lib by
+    <li class="footer">Generated on Tue Jan 27 2015 01:24:42 for Zumo - Sonar lib by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.8 </li>
   </ul>
