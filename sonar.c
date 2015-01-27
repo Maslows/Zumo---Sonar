@@ -59,7 +59,6 @@ uint8_t AvgPointer = 0;
 */
 int16_t SingleResult = 0;
 
-
 /**
  @brief Initialize Sonar and required peripherials
  @param InitialWorkMode Set initial sonar work mode
@@ -171,7 +170,7 @@ void TPM1_IRQHandler(void) {
 				/* If we reach retry limit, proceed with next sweep step */
 				if (ServoMode == SWEEP && retry_counter >= SONAR_MAXTRY) {
 					retry_counter = 0;																														/* reset retry counter */
-					Servo_sweep_step();																														/* Execute next serwo step */
+					ServoSweepStep(0);																														/* Execute next serwo step */
 				} else if ( SonarMode == SINGLE && retry_counter >= SONAR_MAXTRY){
 					retry_counter = 0;
 					ReturnSingleMeas(0);
@@ -191,10 +190,9 @@ void TPM1_IRQHandler(void) {
 					/* Depending on the settings, decide what to do next with obtained result */
 					/* If Servo is in SWEEP mode and we collect SONAR_AVG_NUMBER samples
 						 call user handler and procceed with the sweep */
-					if (ServoMode == SWEEP ) {						 												/* Execute next servo step if enabled */
-							result = CalculateResult();																									/* Calculate average of all collected samples */
-							SonarDistHandler(result, ServoPosition); 																		/* Execute user results handler */	
-							Servo_sweep_step();
+					if (ServoMode == SWEEP ) {						 												
+							result = CalculateResult();																									/* Calculate average of all collected samples */	
+							ServoSweepStep(result);																											/* Execute next servo step if enabled */
 			
 					/* If Servo is in manual mode and Sonar is set to CONTINUOUS work, just call user handler */	
 					} else if ( ServoMode == MANUAL && SonarMode == CONTINUOUS ) {				
@@ -218,8 +216,9 @@ void TPM1_IRQHandler(void) {
        This will force next trigger as soon as sonar is ready to recieve another echo.
 			 It is possible to use it also in MANUAL mode, but if something is nearby sonar,
 			 it will produce A LOT of samples. In SWEEP mode this is not an issude due to the
-			 fact that sonar if offline when servo is changing position. */
-		if (ServoMode == SWEEP || SonarMode == SINGLE){
+			 fact that sonar if offline when servo is changing position, except for LOCKED state in
+		   ::SCAN_AND_LOCK mode */
+		if ( (ServoMode == SWEEP && ServoState != LOCKED) || SonarMode == SINGLE){
 			TPM1->CNT = 0;
 		}
 	}
@@ -261,7 +260,7 @@ void DisableSonar(void){
 void EnableSonar(void){
 	/* If servo is IDLE, start measurement right away. 
 	   Otherwise, wait for servo (PIT) to enable measurement */
-	if (ServoState == IDLE) {
+	if (ServoState == IDLE || ServoState == LOCKED) {
 		TPM1->CONTROLS[1].CnV = 15u;																/* Enable trigger */
 		TPM1->CNT = 0;																							/* Reset counter */
 		retry_counter = 0;																				  /* Clear overflow timeout */
@@ -279,7 +278,7 @@ void EnableSonar(void){
 	@warning This function uses busy-waiting to check servo and sonar readiness
 */
 void SonarStartMeas(int32_t angle){
-	Servo_move_by_degree(angle);		/* Set servo to desired position */
+	ServoMoveByDegree(angle);		/* Set servo to desired position */
 	SingleResult = 0;								/* Set SingleResult to 0 to indicate how 
 																		 result should be returned. 0 = Interupt. */
 	SonarChangeMode(SINGLE);				/* Change sonar mode and enable if not set to single already*/
@@ -295,7 +294,7 @@ void SonarStartMeas(int32_t angle){
 	@return Measured distance in cm
 */
 uint16_t SonarGetDistance(int32_t angle){
-	Servo_move_by_degree(angle);			/* Set servo to desired position */
+	ServoMoveByDegree(angle);			/* Set servo to desired position */
 	SingleResult = -1;								/* Set SingleResult to 0 to indicate how 
 																		   result should be returned. 1 = write result to SingleResult. */
 	SonarChangeMode(SINGLE);				  /* Change sonar mode and enable if not set to single already*/

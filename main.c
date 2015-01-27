@@ -9,16 +9,34 @@
 #include "stdio.h"
 
 char tab[BUFF_SIZE];
+// KrowaKrowa456 10/3
+// Muka-23 4/3
+int ParseIntNumber(char * string, int begining, int length){
+	int i;
+	int result = 0;
+	int exponent = 1;
+	for ( i = begining + length - 1; i != begining -1; i--){
+		if (string[i] != '-'){
+			string[i] -= 48;
+			string[i] *= exponent;
+			result += string[i];
+			exponent *= 10;
+		}
+		else {
+			result *= -1;
+			break;
+		}
+	}
+	return result;
+}
 
 int main(void) {
 	
 	
 	bt_init(BAUD_RATE);
 	Sonar_init(CONTINUOUS);
-	Servo_init(MANUAL);
+	Servo_init(MANUAL, SCAN_AND_LOCK);
 	motorDriverInit();
-	
-
 	
 	while(1){ 
 		bt_getStr( tab );								// Get string from buffer
@@ -41,23 +59,26 @@ int main(void) {
 				driveForwardLeftTrack(40); 
 				driveReverseRightTrack(40);
 			}
-			else if ( strcmp(tab, "ServoOn") == 0) {
+			else if ( strcmp(tab, "ServoScanAndLock") == 0) {
 				ServoChangeMode(SWEEP);
+				ServoChangeSweepMode(SCAN_AND_LOCK);
+			}
+			else if ( strcmp(tab, "ServoScanAndGo") == 0) {
+				ServoChangeMode(SWEEP);
+				ServoChangeSweepMode(SCAN_AND_GO);
 			}
 			else if ( strcmp(tab, "ServoCenter") == 0) {
 				ServoChangeMode(MANUAL);
-				Servo_move_by_degree(0);
+				ServoMoveByDegree(0);
 			}
-			else if ( strcmp(tab, "SonarStartMeas") == 0) {
-				static int new_deg = -82;
+			else if ( strncmp(tab, "SonarStartMeas",14) == 0) {
+				int new_deg = ParseIntNumber(tab,14,3);
 				SonarStartMeas(new_deg);
-				new_deg += 10;
 			}
-			else if ( strcmp(tab, "SonarGetDistance") == 0) {
+			else if ( strncmp(tab, "SonarGetDistance",16) == 0) {
 				char buffor[12];
-				static int new_deg = -82;
+				int new_deg = ParseIntNumber(tab,16,3);
 				sprintf(buffor, "%04d,%04hu\n",new_deg,SonarGetDistance(new_deg));
-				new_deg += 10;
 				bt_sendStr(buffor);
 			}
 			else if ( strcmp(tab, "e") == 0) {
@@ -71,22 +92,14 @@ int main(void) {
 				}
 			}
 			else if (strncmp(tab, "speed",5) == 0){
-				int new_speed = 0;
-				sscanf(tab,"speed%du",&new_speed);
+				int new_speed = ParseIntNumber(tab,5,3);
 				if (new_speed >= 0 && new_speed <= 100){
 					speed = new_speed;
 				}
 			}
-			else if (strncmp(tab, "servopos",8) == 0){
-				int new_deg = 0;
-				sscanf(tab,"servopos%d",&new_deg);
-				if (new_deg >= -82 && new_deg <= 82){
-					ServoMode = MANUAL;
-					Servo_move_by_degree(new_deg);
-				}
-			}
-			else if ( strcmp(tab, "ping") == 0) {
-				bt_sendStr("pong");
+			else if ( strncmp(tab, "SonarLockRange",14) == 0) {
+				int new_range = ParseIntNumber(tab,14,3);
+				ServoChangeLockRange(new_range);
 			}
 		}
 	} 
