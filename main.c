@@ -49,11 +49,15 @@ int main(void) {
 				Servo_move_by_degree(0);
 			}
 			else if ( strcmp(tab, "SonarStartMeas") == 0) {
-				SonarStartMeas(0);
+				static int new_deg = -82;
+				SonarStartMeas(new_deg);
+				new_deg += 10;
 			}
 			else if ( strcmp(tab, "SonarGetDistance") == 0) {
 				char buffor[12];
-				sprintf(buffor, "%04d,%04hu\n",30,SonarGetDistance(30));
+				static int new_deg = -82;
+				sprintf(buffor, "%04d,%04hu\n",new_deg,SonarGetDistance(new_deg));
+				new_deg += 10;
 				bt_sendStr(buffor);
 			}
 			else if ( strcmp(tab, "e") == 0) {

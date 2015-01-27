@@ -11,20 +11,20 @@
 /** 
 	@brief Define minimum PWM lenght which servo can tolerate
 	This macro defines the minimal PWM which can be used, 
-	i.e. how far to the left this servo can move
+	i.e. how far to the LEFT this servo can move
 	@warning Setting this value below 800 may damage the servo. 
 					 If you hear noisy clicking, power off the system!
 */					 
-#define SERVO_MOVEMENT_MIN 800*SERTO_TICKS_PER_US
+#define SERVO_MOVEMENT_MIN 2200*SERTO_TICKS_PER_US
 
 /** 
 	@brief Define maximum PWM lenght which servo can tolerate
 	This macro defines the maximal PWM which can be used, 
-	i.e. how far to the right this servo can move
+	i.e. how far to the RIGHT this servo can move
 	@warning Setting this value above 2200 may damage the servo. 
 					 If you hear noisy clicking, power off the system!
 */	
-#define SERVO_MOVEMENT_MAX 2200*SERTO_TICKS_PER_US    
+#define SERVO_MOVEMENT_MAX 800*SERTO_TICKS_PER_US    
 
 /**
  @brief Define how many degrees this servo can turn

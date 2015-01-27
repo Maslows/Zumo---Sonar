@@ -12,13 +12,18 @@
 */
 #define SONAR_TICKS_PER_CM 87u		 
 
+/**
+	@brief Echo pin mask
+*/
+#define ECHO_MASK (1 << 20)
+
 /** 
 	@brief Define sonar work mode
 	
-	This variable sets sonar work mode. You can set it to different mode
-	during run time
+	This variable sets sonar work mode. You can change it using ::SonarChangeMode
+	@warning Do NOT modify this variable by hand!
 */
-SonarWorkModes SonarMode = SINGLE; /** Default sonar work mode is SINGLE */ 
+SonarMode_t SonarMode = SINGLE; /** Default sonar work mode is SINGLE */ 
 
 /**
 	@brief Debug variable containing total number of successful measurments
@@ -31,14 +36,9 @@ uint32_t success = 0;
 uint32_t fail = 0;
 
 /**
-	@brief Variable containing number of failed measurments tries; Used to timeout measurment.
+	@brief Variable containing number of failed measurments tries; Used to timeout measurement.
 */
 uint8_t retry_counter = 0;
-
-/**
-	@brief Echo pin mask
-*/
-#define ECHO_MASK (1 << 20)
 
 /**
 	@brief Buffer containing previous measurments. Used only when averaging is enabled.
@@ -51,10 +51,11 @@ uint16_t AvgBuffer[SONAR_AVG_NUMBER];
 uint8_t AvgPointer = 0;
 
 /**
-	@brief Variable containing single measurment result. It is also used to determind how to return result to the user.
+@brief Variable containing result of single measurment done using ::SonarStartMeas or ::SonarGetDistance. 
+  It is also used to determind how to return result to the user.
 	If this variable is set to -1 before measurement, Sonar will set it to obtained result.
 	If this variable is set to 0, Sonar will trigger ::SonarDistHandler with obtained result.
-	@warning Do not read or write this value manualy!
+	@warning Do not read or write this variable by hand!
 */
 int16_t SingleResult = 0;
 
@@ -63,7 +64,7 @@ int16_t SingleResult = 0;
  @brief Initialize Sonar and required peripherials
  @param InitialWorkMode Set initial sonar work mode
 */
-void Sonar_init(SonarWorkModes InitialWorkMode){										
+void Sonar_init(SonarMode_t InitialWorkMode){										
 
 	/* Select clocks */
 	SIM->SOPT2 |= SIM_SOPT2_TPMSRC(1); 									/*set 'MCGFLLCLK clock or MCGPLLCLK/2' */
@@ -82,17 +83,17 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 	/* Set TMP1 clock */
 	TPM1->SC |= TPM_SC_PS(0x5);													/* Set clock prescaler to divide by 32. 1 Tick = 2/3us */
 	TPM1->CNT = 0;																			/* Clear counter value */	
-	TPM1->MOD = (SONAR_MEAS_INTERVAL_MS*1000*3)/2;           /* Set measurment interval */
+	TPM1->MOD = (SONAR_MEAS_INTERVAL_MS*1000*3)/2;      /* Set measurment interval */
 																											
 
 	/* Configure TMP1_CH0. Echo Measurement*/
-	TPM1->CONTROLS[0].CnSC |= TPM_CnSC_ELSB_MASK 	/* Set Ch0 to Input capture mode. */
-												 | 	TPM_CnSC_ELSA_MASK  /* Rising and falling edge detection */
-												 |  TPM_CnSC_CHIE_MASK; /* Enable channel interupts */
+	TPM1->CONTROLS[0].CnSC |= TPM_CnSC_ELSB_MASK 				/* Set Ch0 to Input capture mode. */
+												 | 	TPM_CnSC_ELSA_MASK  			/* Rising and falling edge detection */
+												 |  TPM_CnSC_CHIE_MASK; 			/* Enable channel interupts */
 
 										 
 	/* Configure TMP1_CH1. Trigger */
-	TPM1->CONTROLS[1].CnSC |= TPM_CnSC_MSB_MASK | TPM_CnSC_ELSB_MASK; /* Set clear output on match. */									 
+	TPM1->CONTROLS[1].CnSC |= TPM_CnSC_MSB_MASK | TPM_CnSC_ELSB_MASK; /* Set to EPWM - high true pusles */									 
 	TPM1->CONTROLS[1].CnV = 15u;																			/* Set counter to 10us */
 	
 	/* Configure NVIC for TMP1 interupt  */
@@ -102,12 +103,6 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 
 	/* Set initial sonar work mode */
 	SonarChangeMode(InitialWorkMode);
-
-	
-	/* Configure NVIC for PIT interupt */
-	NVIC_ClearPendingIRQ(PIT_IRQn);															/*  Clear NVIC pending PIT interupts */
-	NVIC_EnableIRQ(PIT_IRQn);																		/*  Enable NVIC interrupts source for PIT */
-	NVIC_SetPriority(PIT_IRQn, SONAR_INTERUPT_PRIORITY);				/*  Set PIT interrupt priority */	
 	
 	/* Enable TPM1 */
 	TPM1->SC |= TPM_SC_CMOD(1);
@@ -115,7 +110,7 @@ void Sonar_init(SonarWorkModes InitialWorkMode){
 }
 
 /** 
- @brief Helper function which returns result in case of single measurement. 
+ @brief Helper function which returns result to the user in case of single measurement. 
 */
 void ReturnSingleMeas(uint16_t result){
 	DisableSonar();															
@@ -130,13 +125,24 @@ void ReturnSingleMeas(uint16_t result){
 }
 
 /**
+	@brief Helper function which calculates average of all samples in ::AvgBuffer.
+*/
+uint16_t CalculateAverage(){
+	uint16_t result = 0;
+	uint8_t  i = 0;																														
+	
+	for (i = 0; i < SONAR_AVG_NUMBER; i++){
+		result += AvgBuffer[i];
+	}
+	
+	return result/(double)SONAR_AVG_NUMBER;
+};
+
+/**
  @brief TPM1 interupt handler
 
  Check which channel triggered interupt:
- - CH0: If sonar state is TRIGGER_SENT, clear counter and set sonar state to CAPTURE_START\n
-      If sonar state is CAPTURE_START, process the result and set sonar state to CAPTURE_END
- - CH1:  Turn off trigger pin which was set maunally or by PIT in countinous mode
- - Timer Overflow: Set sonar to CAPTURE_OVERFLOW state 
+ - CH0: Detect rising/falling edge on echo pin.
 */
 void TPM1_IRQHandler(void) {	
 	/* Check if it's rising edge interupt or falling edge interupt on Ch0*/
@@ -165,19 +171,13 @@ void TPM1_IRQHandler(void) {
 				/* Successful measurment */
 			}	else { 	
 				uint16_t result = TPM1->CONTROLS[0].CnV/SONAR_TICKS_PER_CM;	                    /* Get result */
-				uint8_t  i = 0;																																	/* loop iterator */
 				
 				/* Check if result is smaller than defined max range */
 				if (result < SONAR_MAX_RANGE_CM) {
-					/* Add result to buffer and calculate average of all samples */
+					/* Add result to buffer */
 					retry_counter = 0;
 					AvgBuffer[AvgPointer] = result;
 					AvgPointer = (AvgPointer + 1) % SONAR_AVG_NUMBER;
-					result = 0;
-					for (i = 0; i < SONAR_AVG_NUMBER; i++){
-						result += AvgBuffer[i];
-					}
-					result = result / (double)SONAR_AVG_NUMBER;
 					success++;
 				} else {
 					/* If obtained sample is out of range, increment timeout counter */ 
@@ -190,40 +190,40 @@ void TPM1_IRQHandler(void) {
 				/* If Servo is in SWEEP mode and we collect SONAR_AVG_NUMBER samples
 					 call user handler and procceed with the sweep */
 				if (ServoMode == SWEEP && AvgPointer == 0 && retry_counter == 0) {						 	/* Execute next servo step if enabled */
+					result = CalculateAverage();																									/* Calculate average of all collected samples */
 					SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */	
 					Servo_sweep_step();
-				}	
+					
 				/* If measurment is successful but result is out of range	SONAR_MAXTRY times
 					 proceed with sweep */
-			  else if (ServoMode == SWEEP && retry_counter > SONAR_MAXTRY ) {
+			  } else if (ServoMode == SWEEP && retry_counter > SONAR_MAXTRY ) {
 					retry_counter = 0;																													/* reset retry counter  */
 					Servo_sweep_step();																													/* Execute next serwo step */
-				}
 					
 				/* If Servo is in manual mode and Sonar is set to CONTINUOUS work, just call user handler */	
-				else if ( ServoMode == MANUAL && SonarMode == CONTINUOUS ) {
+				} else if ( ServoMode == MANUAL && SonarMode == CONTINUOUS ) {
 					if (retry_counter == 0) {
+						result = CalculateAverage();																									/* Calculate average of all collected samples */
 						SonarDistHandler(result, ServoPosition); 																			/* Execute user results handler */
 					} else if (retry_counter >= SONAR_MAXTRY) {
 						retry_counter = 0;
 						SonarDistHandler(0, ServoPosition); 																			/* Execute user results handler */	
 					}
 					TPM1->CONTROLS[1].CnV = 15u;																									/* Enable trigger */
-				} 
-
+		
 				/* If Sonar is set to SINGLE work mode and we collect enought samples return value
 					 and disable sonar */
-			  else if (SonarMode == SINGLE  && AvgPointer == 0 ) {
+			  } else if (SonarMode == SINGLE && AvgPointer == 0 ) {
 					if (retry_counter == 0) {
+						result = CalculateAverage();																									/* Calculate average of all collected samples */
 						ReturnSingleMeas(result);
 					}	else if (retry_counter >= SONAR_MAXTRY){
 						retry_counter = 0;
 						ReturnSingleMeas(0);
 					}
-				} 
-				
+				 
 				/* Wait for more samples */
-				else {
+				} else {
 					TPM1->CONTROLS[1].CnV = 15u;																						/* Enable trigger */
 				}
 		}
@@ -243,15 +243,19 @@ void TPM1_IRQHandler(void) {
 /**
 	@brief This function allows save changing of sonar work mode.
 */
-void SonarChangeMode(SonarWorkModes NewMode){
+void SonarChangeMode(SonarMode_t NewMode){
 	/* Make sure new mode is not the same as the current one */
 	if(NewMode != SonarMode) {
 		if (NewMode == CONTINUOUS){
 			SonarMode = CONTINUOUS;
 			EnableSonar();
 		} else if (NewMode == SINGLE){
-			SonarMode = SINGLE;
+			/* If Servo is in SWEEP mode change it to MANUAL */
+			if (ServoMode == SWEEP){
+				ServoChangeMode(MANUAL);
+			}
 			DisableSonar();
+			SonarMode = SINGLE;
 		}
 	}
 }
@@ -260,8 +264,8 @@ void SonarChangeMode(SonarWorkModes NewMode){
 	@brief Disable all sonar operations and interupts.
 */
 void DisableSonar(void){
-	TPM1->CONTROLS[1].CnV = 0u;																	  /* Disable trigger */
 	TPM1->CONTROLS[0].CnSC &= ~TPM_CnSC_CHIE_MASK;								/* Disable Sonar interupts */
+	TPM1->CONTROLS[1].CnV = 0u;																	  /* Disable trigger */
 	TPM1->CNT = 0;																							  /* Reset counter */
 };
 
@@ -269,27 +273,30 @@ void DisableSonar(void){
 	@brief Enable  sonar operations and interupts.
 */
 void EnableSonar(void){
-	TPM1->CONTROLS[1].CnV = 15u;																/* Enable trigger */
-	TPM1->CNT = 0;																							/* Reset counter */
-	retry_counter = 0;																				  /* Clear overflow timeout */
-	TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;								/* Clear Sonar interupt flag */
-	TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHIE_MASK;								/* Enable Sonar interupts */
+	/* If servo is IDLE, start measurement right away. 
+	   Otherwise, wait for servo (PIT) to enable measurement */
+	if (ServoState == IDLE) {
+		TPM1->CONTROLS[1].CnV = 15u;																/* Enable trigger */
+		TPM1->CNT = 0;																							/* Reset counter */
+		retry_counter = 0;																				  /* Clear overflow timeout */
+		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;								/* Clear Sonar interupt flag */
+		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHF_MASK;								/* Double buffer */
+		TPM1->CONTROLS[0].CnSC |= TPM_CnSC_CHIE_MASK;								/* Enable Sonar interupts */
+	}
 };
 
 /** 
 	@brief Initialize a single sonar measurment
 	This function can be used to trigger a single measurment. 
 	Interupt will trigger ::SonarDistHandler.
-	@param 
+	@param angle Specify at what Servo angle measurement should be taken
 	@warning This function uses busy-waiting to check servo and sonar readiness
 */
 void SonarStartMeas(int32_t angle){
 	Servo_move_by_degree(angle);		/* Set servo to desired position */
 	SingleResult = 0;								/* Set SingleResult to 0 to indicate how 
 																		 result should be returned. 0 = Interupt. */
-	if (SonarMode != SINGLE) {
-		SonarChangeMode(SINGLE);				/* Change sonar mode and enable if not set to single already*/
-	}
+	SonarChangeMode(SINGLE);				/* Change sonar mode and enable if not set to single already*/
 	EnableSonar();
 }; 
 
@@ -297,22 +304,21 @@ void SonarStartMeas(int32_t angle){
 /** 
 	@brief Initialize a single sonar measurment and return distance in cm.
 	This function can be used to trigger a single measurment. 
+  @param angle Specify at what Servo angle measurement should be taken
 	@warning This function uses busy-waiting to check servo and sonar readiness
 	@return Measured distance in cm
 */
 uint16_t SonarGetDistance(int32_t angle){
-	Servo_move_by_degree(angle);		/* Set servo to desired position */
+	Servo_move_by_degree(angle);			/* Set servo to desired position */
 	SingleResult = -1;								/* Set SingleResult to 0 to indicate how 
 																		   result should be returned. 1 = write result to SingleResult. */
-	if (SonarMode != SINGLE) {
-		SonarChangeMode(SINGLE);				/* Change sonar mode and enable if not set to single already*/
-	}
-	
+	SonarChangeMode(SINGLE);				  /* Change sonar mode and enable if not set to single already*/
 	EnableSonar();
 	
 	while(SingleResult == -1){};		/* busy-wait for result */
 	return SingleResult;
 }; 
+
 
 /** 
 	@brief User handler for sonar measurment results
@@ -330,6 +336,5 @@ void SonarDistHandler(uint16_t distance_cm, int32_t angle){
 	char buffor[12];
 	sprintf(buffor, "%04d,%04hu\n",angle,distance_cm);
 	bt_sendStr(buffor);
-
 }
 

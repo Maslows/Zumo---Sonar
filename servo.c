@@ -24,7 +24,7 @@ ServoMode_t ServoMode = MANUAL;
 int32_t ServoPosition = 0;
 
 /**
-	@brief Define Servo current state 
+	@brief Variable containing Servo current state 
 */
 ServoState_t ServoState = IDLE;
 
@@ -59,6 +59,11 @@ void Servo_init(ServoMode_t InitialWorkMode){
 	PIT->CHANNEL[1].LDVAL = 0xFFFF;																		/* set PIT Load Value */
 	PIT->CHANNEL[1].TCTRL |= PIT_TCTRL_TIE_MASK;  										/* Enable interrupts in PIT module on channel 1 */
 	PIT->CHANNEL[1].TCTRL &= ~PIT_TCTRL_TEN_MASK;  										/* Enable Timer on given channel on channel 1 */
+	
+	/* Configure NVIC for PIT interupt */
+	NVIC_ClearPendingIRQ(PIT_IRQn);															/*  Clear NVIC pending PIT interupts */
+	NVIC_EnableIRQ(PIT_IRQn);																		/*  Enable NVIC interrupts source for PIT */
+	NVIC_SetPriority(PIT_IRQn, SONAR_INTERUPT_PRIORITY);				/*  Set PIT interrupt priority */	
 	
 	/* Enable PIT */
 	PIT->MCR = 0x00;
@@ -98,7 +103,6 @@ void ServoChangeMode(ServoMode_t NewMode){
 			SonarChangeMode(CONTINUOUS);							/* Sonar Must be in CONTINUOUS for servo to work in SWEEP mode */
 		} else if (NewMode == MANUAL){
 			ServoMode = MANUAL;
-			EnableSonar();
 		}
 	}
 }
@@ -114,18 +118,21 @@ void ServoChangeMode(ServoMode_t NewMode){
 */
 void Servo_move_by_degree(int32_t degree){
 	
+	/* First check if wanted angle is out of servo range. 
+		 If yes, set servo to maximum possible position in wanted direction */
+	if (degree > SERVO_MOVEMENT_RANGE ){
+		degree = SERVO_MOVEMENT_RANGE;
+	} else if ( degree < -SERVO_MOVEMENT_RANGE ) {
+		degree = -SERVO_MOVEMENT_RANGE;
+	}
+	
+	/* Check if new position is not the same as the current one */
 	if (ServoPosition != degree) {
 		uint32_t NewPosition,AngularDistance,TravelTime_ms;
 		
+		/* Disable Sonar while Servo is in motion */
 		DisableSonar();
-		
-		/* First check if wanted degree is out of servo range. 
-			 If yes, set servo to maximum possible possition in wanted direction */
-		if (degree > SERVO_MOVEMENT_RANGE ){
-			degree = SERVO_MOVEMENT_RANGE;
-		} else if ( degree < -SERVO_MOVEMENT_RANGE ) {
-			degree = -SERVO_MOVEMENT_RANGE;
-		}  
+		  
 		/* Recalculate degrees to us and set servo 
 			 For now assume that servo is linear */
 		NewPosition = (((degree+SERVO_MOVEMENT_RANGE))*(SERVO_MOVEMENT_MAX-SERVO_MOVEMENT_MIN))/(2*SERVO_MOVEMENT_RANGE);
